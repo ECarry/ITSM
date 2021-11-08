@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}备件管理{% endblock %}
+{% block h1_title %}备件管理{% endblock %}
+{% block h2_title %}备件管理{% endblock %}
+{% block h3_title %}
+    <li class="breadcrumb-item active">所有备件</li>
+{% endblock %}
+{% block device_show %}show{% endblock %}
+{% block all_device_active %}class="active"{% endblock %}
+
+
+ {% block content %}
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">类型</th>
+                    <th scope="col">名称</th>
+                    <th scope="col">型号（P/N）</th>
+                    <th scope="col">序列号（S/N）</th>
+                    <th scope="col">入库时间</th>
+                    <th scope="col">出库时间</th>
+                    <th scope="col">状态</th>
+                    <th scope="col">厂家</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for deice in devices %}
+                  <tr>
+                    <th scope="row"><a href="{{ deice.id }} "> {{ deice.id }} </a></th>
+                    <td>{{ deice.device_type }}</td>
+                    <td>{{ deice.name }}</td>
+                    <td>{{ deice.pn }}</td>
+                    <td>{{ deice.sn }}</td>
+                    <td>{{ deice.created_time }}</td>
+                    <td>{{ deice.last_time }}</td>
+                    <td>{{ deice.device_status }}</td>
+                    <td>{{ deice.manufacturer }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+
+ {% endblock %}

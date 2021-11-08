@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}工单管理{% endblock %}
+{% block h1_title %}工单管理{% endblock %}
+{% block h2_title %}工单管理{% endblock %}
+{% block h3_title %}
+    <li class="breadcrumb-item active"><a href="/case">所有工单</a></li>
+{% endblock %}
+{% block h4_title %}<li class="breadcrumb-item active">{{ pk }}</li>{% endblock %}
+{% block case_show %}show{% endblock %}
+{% block font2_active %}active{% endblock %}
+{% block all_case_active %}class="active"{% endblock %}
+
+
+{% block content %}
+客户名称：{{ petitioner_company }}
+申请人： {{ petitioner_name }}
+申请部门： {{ petitioner_depart }}
+申请人邮箱： {{ petitioner_email }}
+申请人电话： {{ petitioner_phone }}
+详情：{{ case_context }}
+{% endblock %}

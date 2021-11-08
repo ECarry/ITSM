@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}工单管理{% endblock %}
+{% block h1_title %}工单管理{% endblock %}
+{% block h2_title %}工单管理{% endblock %}
+{% block h3_title %}
+    <li class="breadcrumb-item active">所有工单</li>
+{% endblock %}
+{% block case_show %}show{% endblock %}
+{% block font2_active %}active{% endblock %}
+{% block all_case_active %}class="active"{% endblock %}
+
+
+ {% block content %}
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">优先级</th>
+                    <th scope="col">工单编号</th>
+                    <th scope="col">工单类型</th>
+                    <th scope="col">主题</th>
+                    <th scope="col">登记人</th>
+                    <th scope="col">派单时间</th>
+                    <th scope="col">状态</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for case in cases %}
+                  <tr>
+                    <th scope="row"><a href="{{ case.id }}"> {{ case.id }} </a></th>
+                    <td>{{ case.level }}</td>
+                    <td>{{ case.num }}</td>
+                    <td>{{ case.type }}</td>
+                    <td>{{ case.title }}</td>
+                    <td>{{ case.register }}</td>
+                    <td>{{ case.creat_time }}</td>
+                    <td>{{ case.status }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+
+ {% endblock %}
