@@ -1,8 +1,4 @@
 venv
 .DS_Store
 .idea
-apps/cart/migrations
-apps/case/migrations
-apps/dashboard/migrations
-apps/device/migrations
-apps/user/migrations
+ITSM/settings.py
