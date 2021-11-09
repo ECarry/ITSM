@@ -18,7 +18,7 @@ class DeviceView(View):
         devices = Device.objects.all()
 
         context = {
-            'devices': 'devices',
+            'devices': devices,
         }
         return render(request, 'device.html', context)
 

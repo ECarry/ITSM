@@ -17,8 +17,10 @@
                     <th scope="col">#</th>
                     <th scope="col">优先级</th>
                     <th scope="col">工单编号</th>
-                    <th scope="col">工单类型</th>
-                    <th scope="col">主题</th>
+                    <th scope="col">服务类型</th>
+                    <th scope="col">位置</th>
+                    <th scope="col">设备</th>
+                    <th scope="col">SN</th>
                     <th scope="col">登记人</th>
                     <th scope="col">派单时间</th>
                     <th scope="col">状态</th>
@@ -27,13 +29,22 @@
                 <tbody>
                   {% for case in cases %}
                   <tr>
-                    <th scope="row"><a href="{{ case.id }}"> {{ case.id }} </a></th>
-                    <td>{{ case.level }}</td>
-                    <td>{{ case.num }}</td>
-                    <td>{{ case.type }}</td>
-                    <td>{{ case.title }}</td>
+                    <th scope="row">{{ case.id }}</th>
+{#                      {% if case.level == 3 %}#}
+{#                    <td><span class="badge bg-success">三级</span></td>#}
+{#                      {% elif case.level == 2 %}#}
+{#                    <td><span class="badge bg-warning">二级</span></td>#}
+{#                      {% else case.level == 1 %}#}
+{#                    <td><span class="badge bg-danger">一级</span></td>#}
+{#                      {% endif %}#}
+                    <td><span class="badge bg-success">三级</span></td>
+                    <td><a href="{{ case.id }}"> {{ case.num }}</a></td>
+                    <td>{{ case.server.support }}</td>
+                    <td>{{ case.area }}</td>
+                    <td>{{ case.server.manufacturer }}{{ case.server.name }}</td>
+                    <td>{{ case.server.sn }}</td>
                     <td>{{ case.register }}</td>
-                    <td>{{ case.creat_time }}</td>
+                    <td>{{ case.create_time }}</td>
                     <td>{{ case.status }}</td>
                   </tr>
                   {% endfor %}

@@ -1,11 +1,13 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import View
-from .models import Case
+from .models import *
 
 
 # 工单视图
 class CaseView(View):
     def get(self, request):
+        # 获取所有工单
+        cases = Case.objects.all()
         context = {'cases': Case.objects.all()}
         return render(request, 'case.html', context)
 
@@ -27,6 +29,8 @@ class CaseDetailView(View):
         petitioner_phone = case.petitioner.phone
         petitioner_depart = case.petitioner.department.name
         petitioner_company = case.petitioner.company.name
+        project = case.server.project.name
+        project_num = case.server.project.project_num
 
         context = {
             'pk': pk,
@@ -39,6 +43,8 @@ class CaseDetailView(View):
             'petitioner_phone': petitioner_phone,
             'petitioner_depart': petitioner_depart,
             'petitioner_company': petitioner_company,
+            'project': project,
+            'project_num': project_num
         }
 
         return render(request, 'case_detail.html', context)

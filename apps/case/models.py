@@ -23,7 +23,7 @@ class Case(BaseModel):
     status = models.SmallIntegerField(choices=STATUS_CHOICES, default=2, verbose_name="工单状态")
     level = models.SmallIntegerField(choices=LEVEL_CHOICES, default=3, verbose_name="工单等级")
     type = models.SmallIntegerField(choices=TYPE_CHOICES, default=1, verbose_name="服务类型")
-    title = models.CharField(max_length=128, verbose_name="工单名称")
+    area = models.CharField(max_length=128, null=True, verbose_name="位置")
     context = models.TextField(max_length=256, verbose_name="工单详情")
     register = models.ForeignKey('user.User', null=True, on_delete=models.DO_NOTHING, verbose_name="登记人")
     petitioner = models.ForeignKey('Petitioner', on_delete=models.DO_NOTHING, null=True, verbose_name="客户申请人")
@@ -42,6 +42,7 @@ class Project(BaseModel):
     start_time = models.DateField(null=True, verbose_name="开始时间")
     end_time = models.DateField(null=True, verbose_name="结束时间")
     company = models.ForeignKey('Company', on_delete=models.DO_NOTHING, verbose_name="客户名称")
+
 
     class Meta:
         verbose_name = "项目名称"

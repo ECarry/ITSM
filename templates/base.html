@@ -332,10 +332,10 @@
         <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-gem"></i><span>员工管理</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <ul id="charts-nav" class="nav-content collapse {% block user_show %}{% endblock %}" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="charts-chartjs.html">
-              <i class="bi bi-circle"></i><span>Chart.js</span>
+            <a href="/user/register" {% block all_user_active %}{% endblock %}>
+              <i class="bi bi-circle"></i><span>账号创建</span>
             </a>
           </li>
           <li>
@@ -400,7 +400,7 @@
       <h1>{% block h1_title %}{% endblock %}</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+          <li class="breadcrumb-item"><a href="/dashboard"><i class="bi bi-house-door"></i></a></li>
           <li class="breadcrumb-item {% block font1_active %}{% endblock %}">{% block h2_title %}{% endblock %}</li>
           {% block h3_title %}{% endblock %}
           {% block h4_title %}{% endblock %}

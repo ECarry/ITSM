@@ -12,10 +12,35 @@
 
 
 {% block content %}
-客户名称：{{ petitioner_company }}
-申请人： {{ petitioner_name }}
-申请部门： {{ petitioner_depart }}
-申请人邮箱： {{ petitioner_email }}
-申请人电话： {{ petitioner_phone }}
-详情：{{ case_context }}
+<b>客户名称：</b>{{ petitioner_company }}<br><br>
+<b>申请人：</b>{{ petitioner_name }}<br><br>
+<b>申请部门：</b> {{ petitioner_depart }}<br><br>
+<b>申请人邮箱：</b> {{ petitioner_email }}<br><br>
+<b>申请人电话：</b> {{ petitioner_phone }}<br><br>
+<b>详情：</b>{{ case_context }}<br><br>
+
+                  <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">状态</th>
+                    <th scope="col">项目名称</th>
+                    <th scope="col">项目编号</th>
+                    <th scope="col">响应时间（小时）</th>
+                    <th scope="col">到达现场时间（小时）</th>
+                    <th scope="col">服务时间（小时）</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="badge bg-success"><i class="bi bi-check-circle me-1"></i></span></td>
+                    <td>{{ project }}</td>
+                    <td>{{ project_num }}</td>
+                    <td>1</td>
+                    <td>4</td>
+                    <td>8</td>
+                  </tr>
+                </tbody>
+              </table>
+
 {% endblock %}
+

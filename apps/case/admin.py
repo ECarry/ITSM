@@ -5,7 +5,7 @@ from .models import *
 
 @admin.register(Case)
 class CaseAdmin(admin.ModelAdmin):
-    list_display = ('num', 'title', 'status', 'type', 'create_time', 'level')
+    list_display = ('num', 'area', 'status', 'type', 'create_time', 'level')
 
 
 @admin.register(Petitioner)
