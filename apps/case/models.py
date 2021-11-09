@@ -43,9 +43,8 @@ class Project(BaseModel):
     end_time = models.DateField(null=True, verbose_name="结束时间")
     company = models.ForeignKey('Company', on_delete=models.DO_NOTHING, verbose_name="客户名称")
 
-
     class Meta:
-        verbose_name = "项目名称"
+        verbose_name = "项目"
         verbose_name_plural = verbose_name
 
     def __str__(self):

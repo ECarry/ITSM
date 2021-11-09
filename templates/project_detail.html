@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}编辑项目-{{ project_num }} {% endblock %}
+{% block h1_title %}编辑项目-{{ project_num }}{% endblock %}
+{% block h2_title %}<a href="/case/project">所有项目</a>{% endblock %}
+{% block h3_title %}
+    <li class="breadcrumb-item active">编辑项目-{{ project_num }}</li>
+{% endblock %}
+{% block case_show %}show{% endblock %}
+{% block font2_active %}active{% endblock %}
+{% block all_project_active %}class="active"{% endblock %}
+{% block content %}
+<div>
+    <form class="row g-3" method="post">
+        {% csrf_token %}
+        <div class="col-md-12">
+          <div class="alert alert-success alert-dismissible fade {{ success_code }}" role="alert">
+              {{ msg }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <label for="inputName5" class="form-label">项目名</label>
+          <input type="text" class="form-control" name="project_name" value="{{ project_name }}">
+        </div>
+        <div class="col-md-6">
+          <label for="inputEmail5" class="form-label">项目编号</label>
+          <input type="text" class="form-control" name="project_num" value="{{ project_num }}">
+        </div>
+        <div class="col-md-6">
+          <label for="inputPassword5" class="form-label">合同编号</label>
+          <input type="text" class="form-control" name="contract_num" value="{{ contract_num }}">
+        </div>
+        <div class="col-6">
+          <label for="inputAddress5" class="form-label">生效时间</label>
+          <input type="date" class="form-control" name="start_time" value="{{ start_time | date:"Y-m-d" }}">
+        </div>
+        <div class="col-6">
+          <label for="inputAddress5" class="form-label">结束时间</label>
+          <input type="date" class="form-control" name="end_time" value="{{ end_time | date:"Y-m-d" }}">
+        </div>
+        <div class="col-md-6">
+          <label for="inputCity" class="form-label">客户名称</label>
+          <input type="text" maxlength="11" class="form-control" name="company" value="{{ company }}">
+        </div>
+        <div class="col-md-12">
+          <div class="alert alert-danger alert-dismissible fade {{ error_show }}" role="alert">
+              {{ errmsg }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        </div>
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary">更新</button>
+          <button type="reset" class="btn btn-secondary">取消</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

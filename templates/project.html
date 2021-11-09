@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}所有工单{% endblock %}
+{% block h1_title %}工单管理{% endblock %}
+{% block h2_title %}工单管理{% endblock %}
+{% block h3_title %}
+    <li class="breadcrumb-item active">所有项目</li>
+{% endblock %}
+{% block case_show %}show{% endblock %}
+{% block font2_active %}active{% endblock %}
+{% block all_project_active %}class="active"{% endblock %}
+{% block new %}<div><a href="/case/project/new_project"><button type="button" class="btn btn-outline-primary">+ 新建</button></a></div>{% endblock %}
+
+
+ {% block content %}
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">合同编号</th>
+                    <th scope="col">签订日期</th>
+                    <th scope="col">项目编号</th>
+                    <th scope="col">开工日期</th>
+                    <th scope="col">合同名称</th>
+                    <th scope="col">客户名称</th>
+                    <th scope="col">结束时间</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for project in projects %}
+                  <tr>
+                    <th scope="row">{{ project.id }}</th>
+                    <td><a href="/case/project/{{ project.id }}">{{ project.contract_num }}</a></td>
+                    <td>{{ project.create_time | date:"Y-m-d" }}</td>
+                    <td>{{ project.project_num }}</td>
+                    <td>{{ project.start_time | date:"Y-m-d" }}</td>
+                    <td>{{ project.name }}</td>
+                    <td>{{ project.company }}</td>
+                    <td>{{ project.end_time | date:"Y-m-d" }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+
+ {% endblock %}

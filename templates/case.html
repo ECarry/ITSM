@@ -44,7 +44,7 @@
                     <td>{{ case.server.manufacturer }}{{ case.server.name }}</td>
                     <td>{{ case.server.sn }}</td>
                     <td>{{ case.register }}</td>
-                    <td>{{ case.create_time }}</td>
+                    <td>{{ case.create_time | date:"Y-m-d H:i:s"}}</td>
                     <td>{{ case.status }}</td>
                   </tr>
                   {% endfor %}
