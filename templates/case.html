@@ -11,44 +11,73 @@
 
 
  {% block content %}
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">优先级</th>
-                    <th scope="col">工单编号</th>
-                    <th scope="col">服务类型</th>
-                    <th scope="col">位置</th>
-                    <th scope="col">设备</th>
-                    <th scope="col">SN</th>
-                    <th scope="col">登记人</th>
-                    <th scope="col">派单时间</th>
-                    <th scope="col">状态</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for case in cases %}
-                  <tr>
-                    <th scope="row">{{ case.id }}</th>
-{#                      {% if case.level == 3 %}#}
-{#                    <td><span class="badge bg-success">三级</span></td>#}
-{#                      {% elif case.level == 2 %}#}
-{#                    <td><span class="badge bg-warning">二级</span></td>#}
-{#                      {% else case.level == 1 %}#}
-{#                    <td><span class="badge bg-danger">一级</span></td>#}
-{#                      {% endif %}#}
-                    <td><span class="badge bg-success">三级</span></td>
-                    <td><a href="{{ case.id }}"> {{ case.num }}</a></td>
-                    <td>{{ case.server.support }}</td>
-                    <td>{{ case.area }}</td>
-                    <td>{{ case.server.manufacturer }}{{ case.server.name }}</td>
-                    <td>{{ case.server.sn }}</td>
-                    <td>{{ case.register }}</td>
-                    <td>{{ case.create_time | date:"Y-m-d H:i:s"}}</td>
-                    <td>{{ case.status }}</td>
-                  </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">优先级</th>
+        <th scope="col">工单编号</th>
+        <th scope="col">服务类型</th>
+        <th scope="col">位置</th>
+        <th scope="col">设备</th>
+        <th scope="col">SN</th>
+        <th scope="col">登记人</th>
+        <th scope="col">派单时间</th>
+        <th scope="col">状态</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for case in cases %}
+      <tr>
+        <th scope="row">{{ case.id }}</th>
+        {% if case.level == 3 %}
+        <td><span class="badge bg-success">普通</span></td>
+        {% elif case.level == 2 %}
+        <td><span class="badge bg-warning">一般</span></td>
+        {% elif case.level == 1 %}
+        <td><span class="badge bg-danger">紧急</span></td>
+        {% endif %}
+        <td><a href="{{ case.id }}"> {{ case.num }}</a>
+
+        {% if case.type == 1 %}
+        <td><i class="ri-tools-fill"></i> 硬件服务</td>
+        {% elif case.type == 2 %}
+        <td><i class="ri-phone-fill"></i> 技术支撑</td>
+        {% endif %}
+
+        <td>{{ case.area }}</td>
+        <td>{{ case.server.manufacturer }}{{ case.server.name }}</td>
+        <td>{{ case.server.sn }}</td>
+        <td>{{ case.register }}</td>
+        <td>{{ case.create_time | date:"Y-m-d H:i:s"}}</td>
+        {% if case.status == 1 %}
+        <td class="alert-warning"><i class="bi bi-info-circle me-1"></i>审批中</td>
+        {% elif case.status == 2 %}
+        <td class="alert-info"><i class="bi bi-collection me-1"></i>处理中</td>
+        {% elif case.status == 3 %}
+        <td class="alert-success"><i class="bi bi-check-circle me-1"></i>完成</td>
+        {% elif case.status == 4 %}
+        <td class="alert-danger"><i class="bi bi-exclamation-octagon me-1"></i>超时</td>
+        {% endif %}
+      </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<nav aria-label="...">
+    <ul class="pagination justify-content-center">
+      <li class="page-item disabled">
+        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+      </li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item active" aria-current="page">
+        <a class="page-link" href="#">2</a>
+      </li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item">
+        <a class="page-link" href="#">Next</a>
+      </li>
+    </ul>
+</nav>
 
  {% endblock %}

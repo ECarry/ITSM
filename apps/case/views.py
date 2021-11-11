@@ -7,7 +7,9 @@ from .models import *
 class CaseView(View):
     def get(self, request):
         # 获取所有工单
+
         cases = Case.objects.all()
+
         context = {'cases': Case.objects.all()}
         return render(request, 'case.html', context)
 
@@ -31,6 +33,9 @@ class CaseDetailView(View):
         petitioner_company = case.petitioner.company.name
         project = case.server.project.name
         project_num = case.server.project.project_num
+        server_name = case.server.name
+        server_sn = case.server.sn
+        server_manufacturer = case.server.manufacturer
 
         context = {
             'pk': pk,
@@ -44,7 +49,10 @@ class CaseDetailView(View):
             'petitioner_depart': petitioner_depart,
             'petitioner_company': petitioner_company,
             'project': project,
-            'project_num': project_num
+            'project_num': project_num,
+            'server_name': server_name,
+            'server_sn': server_sn,
+            'server_manufacturer': server_manufacturer
         }
 
         return render(request, 'case_detail.html', context)
@@ -145,3 +153,5 @@ class ProjectDetailView(View):
         start_time = request.POST.get('start_time')
         end_time = request.POST.get('end_time')
         company = request.POST.get('company')
+
+

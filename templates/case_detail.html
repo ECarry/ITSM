@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
-{% block title %}工单管理{% endblock %}
-{% block h1_title %}工单管理{% endblock %}
+{% block title %}工单详情-{{ num }}{% endblock %}
+{% block h1_title %}{{ num }}{% endblock %}
 {% block h2_title %}工单管理{% endblock %}
 {% block h3_title %}
     <li class="breadcrumb-item active"><a href="/case">所有工单</a></li>
 {% endblock %}
-{% block h4_title %}<li class="breadcrumb-item active">{{ pk }}</li>{% endblock %}
+{% block h4_title %}<li class="breadcrumb-item active">{{ num }}</li>{% endblock %}
 {% block case_show %}show{% endblock %}
 {% block font2_active %}active{% endblock %}
 {% block all_case_active %}class="active"{% endblock %}
@@ -17,30 +17,32 @@
 <b>申请部门：</b> {{ petitioner_depart }}<br><br>
 <b>申请人邮箱：</b> {{ petitioner_email }}<br><br>
 <b>申请人电话：</b> {{ petitioner_phone }}<br><br>
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">状态</th>
+        <th scope="col">项目名称</th>
+        <th scope="col">项目编号</th>
+        <th scope="col">响应时间（小时）</th>
+        <th scope="col">到达现场时间（小时）</th>
+        <th scope="col">服务时间（小时）</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="badge bg-success"><i class="bi bi-check-circle me-1"></i></span></td>
+        <td>{{ project }}</td>
+        <td>{{ project_num }}</td>
+        <td>1</td>
+        <td>4</td>
+        <td>8</td>
+      </tr>
+    </tbody>
+</table>
+    
+<b>设备型号：</b>{{ server_manufacturer }} {{ server_name }}<br><br>
+<b>序列号：</b>{{ server_sn }}<br><br>
 <b>详情：</b>{{ case_context }}<br><br>
-
-                  <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">状态</th>
-                    <th scope="col">项目名称</th>
-                    <th scope="col">项目编号</th>
-                    <th scope="col">响应时间（小时）</th>
-                    <th scope="col">到达现场时间（小时）</th>
-                    <th scope="col">服务时间（小时）</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><span class="badge bg-success"><i class="bi bi-check-circle me-1"></i></span></td>
-                    <td>{{ project }}</td>
-                    <td>{{ project_num }}</td>
-                    <td>1</td>
-                    <td>4</td>
-                    <td>8</td>
-                  </tr>
-                </tbody>
-              </table>
-
 {% endblock %}
 
