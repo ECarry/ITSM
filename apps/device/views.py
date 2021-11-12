@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404
 from django.views.generic import View
 
-from .models import Device, DeviceType, DeviceSKU
+from .models import Device, DeviceSKU
 from django.contrib.auth.decorators import login_required
 
 
@@ -12,10 +12,10 @@ from django.contrib.auth.decorators import login_required
 
 # 获取所有设备信息
 # # http://127.0.0.1:8000/device
-class DeviceView(View):
+class DeviceSKUView(View):
     def get(self, request):
         # 获取所有备件信息
-        devices = Device.objects.all()
+        devices = DeviceSKU.objects.all()
 
         context = {
             'devices': devices,
@@ -39,8 +39,3 @@ class DeviceDetail(View):
         }
         return render(request, 'device.html', context)
 
-
-# 获取所有备件类型
-# def device_type_list(request):
-#     context = {'types': DeviceType.objects.all()}
-#     return render(request, 'test.html', context)

@@ -7,10 +7,10 @@ from .models import *
 class CaseView(View):
     def get(self, request):
         # 获取所有工单
-
-        cases = Case.objects.all()
-
         context = {'cases': Case.objects.all()}
+
+        # 分页显示
+
         return render(request, 'case.html', context)
 
 

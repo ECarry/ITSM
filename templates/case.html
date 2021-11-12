@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
-{% block title %}工单管理{% endblock %}
-{% block h1_title %}工单管理{% endblock %}
+{% block title %}所有工单{% endblock %}
+{% block h1_title %}所有工单{% endblock %}
 {% block h2_title %}工单管理{% endblock %}
 {% block h3_title %}
     <li class="breadcrumb-item active">所有工单</li>
@@ -22,6 +22,7 @@
         <th scope="col">设备</th>
         <th scope="col">SN</th>
         <th scope="col">登记人</th>
+        <th scope="col">处理人</th>
         <th scope="col">派单时间</th>
         <th scope="col">状态</th>
       </tr>
@@ -49,6 +50,7 @@
         <td>{{ case.server.manufacturer }}{{ case.server.name }}</td>
         <td>{{ case.server.sn }}</td>
         <td>{{ case.register }}</td>
+        <td>{{ case.handler }}</td>
         <td>{{ case.create_time | date:"Y-m-d H:i:s"}}</td>
         {% if case.status == 1 %}
         <td class="alert-warning"><i class="bi bi-info-circle me-1"></i>审批中</td>

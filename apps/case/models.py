@@ -9,6 +9,7 @@ class Case(BaseModel):
         (2, "处理中"),
         (3, "关闭"),
         (4, "超时"),
+        (5, "退单")
     }
     LEVEL_CHOICES = {
         (1, "一级"),
@@ -25,7 +26,10 @@ class Case(BaseModel):
     type = models.SmallIntegerField(choices=TYPE_CHOICES, default=1, verbose_name="服务类型")
     area = models.CharField(max_length=128, null=True, verbose_name="位置")
     context = models.TextField(max_length=256, verbose_name="工单详情")
-    register = models.ForeignKey('user.User', null=True, on_delete=models.DO_NOTHING, verbose_name="登记人")
+    register = models.ForeignKey('user.User', related_name="register_name", null=True, on_delete=models.DO_NOTHING,
+                                 verbose_name="登记人")
+    handler = models.ForeignKey('user.User', related_name="handler_name", null=True, on_delete=models.DO_NOTHING,
+                                verbose_name="处理人")
     petitioner = models.ForeignKey('Petitioner', on_delete=models.DO_NOTHING, null=True, verbose_name="客户申请人")
     server = models.ForeignKey('Server', on_delete=models.DO_NOTHING, null=True, verbose_name="设备")
 

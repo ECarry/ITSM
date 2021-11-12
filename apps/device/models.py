@@ -6,27 +6,16 @@ from django.db import models
 # SKU：土豪金 16G 苹果6 （商品的不可再分的最小单元）。从广义上讲，类目>SPU>SKU。
 
 
-# 备件类型
-class DeviceType(models.Model):
-    type_name = models.CharField(max_length=32, verbose_name="备件类型")
-    # image = models.ImageField(verbose_name="备件类型图片路径")
-
-    class Meta:
-        verbose_name = '备件类型'
-        verbose_name_plural = verbose_name
-
-    def __str__(self):
-        return self.type_name
-
-
 # 备件 SPU：代表一类
 class Device(models.Model):
-    name = models.CharField(max_length=32, verbose_name="备件SPU")
-    size = models.CharField(max_length=32, verbose_name="备件规格")
+    name = models.CharField(max_length=32, verbose_name="备件名称")
 
     class Meta:
         verbose_name = "备件SPU"
         verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name
 
 
 # 备件 SKU：代表具体型号
@@ -37,9 +26,10 @@ class DeviceSKU(models.Model):
         (3, "损坏"),
         (4, "退货")
     }
-    name = models.CharField(max_length=32, verbose_name="备件名称")
+    name = models.ForeignKey('Device', on_delete=models.DO_NOTHING, verbose_name="备件名称")
     sn = models.CharField(max_length=32, null=True, blank=True, verbose_name="序列号")
     pn = models.CharField(max_length=32, verbose_name="型号")
+    spec = models.CharField(max_length=32, null=True, verbose_name="规格")
     unit = models.SmallIntegerField(default=1, verbose_name="备件数")
     device_inventory = models.IntegerField(default=0, verbose_name="备件库存")
     device_used = models.IntegerField(default=0, verbose_name="备件累计使用")
@@ -50,7 +40,6 @@ class DeviceSKU(models.Model):
     return_time = models.DateTimeField(null=True, blank=True, verbose_name="退货时间")
     # on_delete=models.DO_NOTHING 删除备件不影响所关联的类型
     # on_delete=models.CASCADE
-    type = models.ForeignKey('DeviceType', on_delete=models.DO_NOTHING, verbose_name="备件类型")
     status = models.SmallIntegerField(choices=STATUS_CHOICES, verbose_name="备件状态")
     manufacturer = models.ForeignKey('Manufacturer', on_delete=models.DO_NOTHING, verbose_name="厂家")
 

@@ -24,5 +24,6 @@ urlpatterns = [
     path('dashboard/', include('dashboard.urls')),
     path('device/', include('device.urls')),
     path('case/', include('case.urls')),
+    path('order/', include('cart.urls')),
 ]
 
