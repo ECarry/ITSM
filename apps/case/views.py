@@ -1,10 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect, HttpResponse
 from django.views.generic import View
 from .models import *
+from apps.user.mixin import LoginRequiredMixin
 
 
 # 工单视图
-class CaseView(View):
+class CaseView(LoginRequiredMixin, View):
     def get(self, request):
         # 获取所有工单
         context = {'cases': Case.objects.all()}
@@ -15,7 +16,7 @@ class CaseView(View):
 
 
 # 工单详情视图
-class CaseDetailView(View):
+class CaseDetailView(LoginRequiredMixin, View):
     def get(self, request, case_pk):
         # 获取单个工单，id
         case = get_object_or_404(Case, pk=case_pk)
@@ -59,7 +60,7 @@ class CaseDetailView(View):
 
 
 # 新建项目
-class NewProjectView(View):
+class NewProjectView(LoginRequiredMixin, View):
     # get 显示新建项目页面
     def get(self, request):
         # 获取客户名称
@@ -107,7 +108,7 @@ class NewProjectView(View):
 
 
 # 项目视图
-class ProjectView(View):
+class ProjectView(LoginRequiredMixin, View):
     def get(self, request):
         projects = Project.objects.all()
         context = {
@@ -117,7 +118,7 @@ class ProjectView(View):
 
 
 # 项目详细视图
-class ProjectDetailView(View):
+class ProjectDetailView(LoginRequiredMixin, View):
     # get 显示项目详情
     def get(self, request, project_pk):
         # id 获取单个项目详情

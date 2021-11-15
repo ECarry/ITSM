@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from django.views.generic import View
 from .models import *
+from apps.user.mixin import LoginRequiredMixin
 
 
 # 采购订单列表视图
-class OrderView(View):
+class OrderView(LoginRequiredMixin, View):
     def get(self, request):
 
         orders = Order.objects.all()
@@ -17,13 +18,13 @@ class OrderView(View):
 
 
 # 采购订单详情
-class OrderDetailView(View):
-    def ger(self, request, order_pk):
+class OrderDetailView(LoginRequiredMixin, View):
+    def get(self, request, order_pk):
         # 根据 ID 获取单个订单详情
         pass
 
     def post(self, request):
-        # 接受 form 表单
+        # 接收 form 表单数据
 
         # 更新订单详情
         pass

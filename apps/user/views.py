@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.views.generic import View
 from django.contrib.auth import authenticate, login, logout
 from .models import User
+from .mixin import LoginRequiredMixin
 
 
 # login view http://127.0.0.1:8000/user/login
@@ -57,7 +58,7 @@ class LoginView(View):
 
 
 # logout view http://127.0.0.1:8000/user/logout
-class LogoutView(View):
+class LogoutView(LoginRequiredMixin, View):
     def get(self, request):
         logout(request)
         # 注销后返回到登录界面
@@ -65,7 +66,7 @@ class LogoutView(View):
 
 
 # user profile view
-class UserProfileView(View):
+class UserProfileView(LoginRequiredMixin, View):
     def get(self, request):
         return render(request, 'users-profile.html', )
 
@@ -74,7 +75,7 @@ class UserProfileView(View):
 
 
 # register view http://127.0.0.1:8000/user/register
-class RegisterView(View):
+class RegisterView(LoginRequiredMixin, View):
     def get(self, request):
         return render(request, 'register.html')
 
@@ -84,13 +85,13 @@ class RegisterView(View):
         passwd1 = request.POST.get('passwd1')
         passwd2 = request.POST.get('passwd2')
         email = request.POST.get('email')
-        nickname = request.POST.get('nickname')
-        phone = request.POST.get('phone')
+        name = request.POST.get('name')
+        mobile = request.POST.get('mobile')
         active = request.POST.get('active')
         staff = request.POST.get('staff')
         su = request.POST.get('su')
 
-        if not all([username, passwd1, passwd2, email, phone, nickname]):
+        if not all([username, passwd1, passwd2, email, mobile, name]):
             # 数据不完整
             return render(request, 'register.html', {'errmsg': "数据不完整", 'error_show': 'show'})
 
@@ -124,8 +125,8 @@ class RegisterView(View):
         # 判断用户是否为su
         if su == 'on':
             user.is_superuser = 1
-        user.phone = phone
-        user.nickname = nickname
+        user.mobile = mobile
+        user.name = name
         user.save()
 
         return render(request, 'register.html', {'msg': "创建成功", 'success_show': 'show'})
