@@ -8,29 +8,55 @@
 {% block font2_active %}active{% endblock %}
 {% block all_project_active %}class="active"{% endblock %}
 {% block content %}
-<form class="row g-3">
+<form class="row g-3" method="post">
+{% csrf_token %}
   <div class="col-md-2">
-      {% for type in types %}
     <label for="validationDefault04" class="form-label">备件类型</label>
-    <select class="form-select" id="validationDefault04" required>
-      <option selected disabled value="">选择...</option>
-      <option>{{ type.name }}</option>
-    </select>
+    <select class="form-select" id="validationDefault04" name="type" required>
+      {% for type in types %}
+      <option {{ type.id }}>{{ type.name }}</option>
       {% endfor %}
+    </select>
   </div>
 
   <div class="col-md-6">
-      {% for spec in specs %}
     <label for="validationDefault04" class="form-label">备件规格</label>
-    <select class="form-select" id="validationDefault04" required>
-      <option selected disabled value="">选择型号...</option>
-      <option>{{ spec }}</option>
+    <select class="form-select" id="validationDefault04" name="spec" required>
+      {% for spec in specs %}
+      <option value="{{ spec.id }}">{{ spec }}</option>
+       {% endfor %}
     </select>
+  </div>
+
+  <div class="col-md-12">
+    <label for="validationDefault04" class="form-label">相关项目</label>
+    <select class="form-select" id="validationDefault04" name="project" required>
+      {% for project in projects %}
+      <option value="{{ project.id }}">{{ project.name }}</option>
       {% endfor %}
+    </select>
+  </div>
+
+  <div class="col-md-2">
+    <label for="validationDefault04" class="form-label">收件人</label>
+    <select class="form-select" id="validationDefault04" name="addressee" required >
+      {% for ad in address %}
+      <option value="{{ ad.addressee.id }}">{{ ad.addressee }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="col-md-10">
+    <label for="validationDefault04" class="form-label">收货地址</label>
+    <select class="form-select" id="validationDefault04" name="address" required>
+      {% for ad in address %}
+      <option value="{{ ad.id }}">{{ ad.address }}</option>
+      {% endfor %}
+    </select>
   </div>
 
   <div class="col-12">
-    <button class="btn btn-primary" type="submit">Submit form</button>
+    <button class="btn btn-primary" type="submit">新建采购订单</button>
   </div>
 </form>
 {% endblock %}

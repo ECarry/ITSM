@@ -15,9 +15,8 @@
     <thead>
       <tr>
         <th scope="col">订单编号</th>
-        <th scope="col">相关工单号</th>
+        <th scope="col">相关工单</th>
         <th scope="col">物品</th>
-        <th scope="col">型号</th>
         <th scope="col">规格</th>
         <th scope="col">采购人</th>
         <th scope="col">采购时间</th>
@@ -31,7 +30,6 @@
         <td><a href="{{ order.pk }}"> {{ order.order_num }}</a></td>
         <td><a href="/case/{{ order.case.pk }}"> {{ order.case.num }}</a></td>
         <td>{{ order.device.name }}</td>
-        <td>{{ order.device.pn }}</td>
         <td>{{ order.device.spec }}</td>
         <td>{{ order.order_name }}</td>
         <td>{{ order.create_time | date:"Y-m-d H:i:s" }}</td>

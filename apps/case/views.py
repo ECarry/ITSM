@@ -94,7 +94,8 @@ class NewProjectView(LoginRequiredMixin, View):
             p = None
 
         if p:
-            return render(request, 'new_project.html', {'errmsg': "项目编号" + " " + project_num + " " + "已存在", 'error_show': "show"})
+            return render(request, 'new_project.html', {'errmsg': "项目编号" + " " + project_num + " " +
+                                                                  "已存在", 'error_show': "show"})
 
         # 保存数据
         Project.objects.create(name=project_name,

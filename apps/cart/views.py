@@ -4,12 +4,11 @@ from .models import *
 from apps.user.mixin import LoginRequiredMixin
 from datetime import datetime
 from device.models import Device, DeviceSKU
-
+from case.models import Project
 
 # 采购订单列表视图
 class OrderView(LoginRequiredMixin, View):
     def get(self, request):
-
         orders = Order.objects.all()
 
         context = {
@@ -32,7 +31,7 @@ class OrderDetailView(LoginRequiredMixin, View):
         pass
 
 
-# 新建订单叶
+# 新建订单
 class NewOrderView(LoginRequiredMixin, View):
     def get(self, request):
         # 订单编号自动生成
@@ -42,10 +41,16 @@ class NewOrderView(LoginRequiredMixin, View):
         types = Device.objects.all()
         # 备件规格
         specs = DeviceSKU.objects.all()
+        # 项目
+        projects = Project.objects.all()
+        # 收货地址
+        address = Address.objects.all()
         # 响应新建订单页面
         context = {
             'types': types,
-            'specs': specs
+            'specs': specs,
+            'projects': projects,
+            'address': address,
         }
         return render(request, 'new_order.html', context)
         pass
