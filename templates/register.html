@@ -13,7 +13,7 @@
     <form class="row g-3" method="post">
         {% csrf_token %}
         <div class="col-md-12">
-          <div class="alert alert-success alert-dismissible fade {{ success_code }}" role="alert">
+          <div class="alert alert-success alert-dismissible fade {{ success_show }}" role="alert">
               {{ msg }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>

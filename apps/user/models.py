@@ -25,7 +25,7 @@ class User(AbstractUser):
     name = models.CharField(max_length=32, blank=True, null=True, verbose_name="姓名")
     gender = models.CharField(max_length=10, choices=(("male", "男"), ("female", "女")), default="male",
                               verbose_name="性别")
-    image = models.ImageField(upload_to="image/%Y/%m", default="image/default.jpg", max_length=100, null=True,
+    image = models.ImageField(upload_to="image/%Y/%m", default="static/img/profile-img.jpg", max_length=100, null=True,
                               blank=True)
     mobile = models.CharField(max_length=11, blank=True, null=True, verbose_name="电话")
     post = models.CharField(max_length=32, null=True, blank=True, verbose_name="职位")

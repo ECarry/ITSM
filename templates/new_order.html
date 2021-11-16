@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}新建订单{% endblock %}
+{% block h1_title %}新建订单{% endblock %}
+{% block h2_title %}采购管理{% endblock %}
+{% block h3_title %}<li class="breadcrumb-item"><a href="/order">所有订单</a></li>{% endblock %}
+{% block h4_title %}<li class="breadcrumb-item active">新建订单</li>{% endblock %}
+{% block case_show %}show{% endblock %}
+{% block font2_active %}active{% endblock %}
+{% block all_project_active %}class="active"{% endblock %}
+{% block content %}
+<form class="row g-3">
+  <div class="col-md-2">
+      {% for type in types %}
+    <label for="validationDefault04" class="form-label">备件类型</label>
+    <select class="form-select" id="validationDefault04" required>
+      <option selected disabled value="">选择...</option>
+      <option>{{ type.name }}</option>
+    </select>
+      {% endfor %}
+  </div>
+
+  <div class="col-md-6">
+      {% for spec in specs %}
+    <label for="validationDefault04" class="form-label">备件规格</label>
+    <select class="form-select" id="validationDefault04" required>
+      <option selected disabled value="">选择型号...</option>
+      <option>{{ spec }}</option>
+    </select>
+      {% endfor %}
+  </div>
+
+  <div class="col-12">
+    <button class="btn btn-primary" type="submit">Submit form</button>
+  </div>
+</form>
+{% endblock %}

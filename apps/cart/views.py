@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.views.generic import View
 from .models import *
 from apps.user.mixin import LoginRequiredMixin
+from datetime import datetime
+from device.models import Device, DeviceSKU
 
 
 # 采购订单列表视图
@@ -27,4 +29,26 @@ class OrderDetailView(LoginRequiredMixin, View):
         # 接收 form 表单数据
 
         # 更新订单详情
+        pass
+
+
+# 新建订单叶
+class NewOrderView(LoginRequiredMixin, View):
+    def get(self, request):
+        # 订单编号自动生成
+        order_num = datetime.now().strftime('%Y%m%d%H%M%S')
+
+        # 显示备件类型
+        types = Device.objects.all()
+        # 备件规格
+        specs = DeviceSKU.objects.all()
+        # 响应新建订单页面
+        context = {
+            'types': types,
+            'specs': specs
+        }
+        return render(request, 'new_order.html', context)
+        pass
+
+    def post(self, request):
         pass

@@ -37,6 +37,9 @@ class Case(BaseModel):
         verbose_name = "工单"
         verbose_name_plural = verbose_name
 
+    def __str__(self):
+        return self.num
+
 
 # 项目
 class Project(BaseModel):
@@ -108,7 +111,7 @@ class Server(models.Model):
     project = models.ForeignKey('Project', on_delete=models.DO_NOTHING, null=True, verbose_name="所属项目")
 
     class Meta:
-        verbose_name = "设备"
+        verbose_name = "服务器"
         verbose_name_plural = verbose_name
 
     def __str__(self):

@@ -8,15 +8,15 @@
 {% block order_show %}show{% endblock %}
 {% block font2_active %}active{% endblock %}
 {% block all_order_active %}class="active"{% endblock %}
-
+{% block new %}<div><a href="/order/new_order"><button type="button" class="btn btn-outline-primary">+ 新建</button></a></div>{% endblock %}
 
  {% block content %}
 <table class="table">
     <thead>
       <tr>
-        <th scope="col">#</th>
         <th scope="col">订单编号</th>
-        <th scope="col">采购物品</th>
+        <th scope="col">相关工单号</th>
+        <th scope="col">物品</th>
         <th scope="col">型号</th>
         <th scope="col">规格</th>
         <th scope="col">采购人</th>
@@ -28,19 +28,26 @@
     <tbody>
     {% for order in orders %}
       <tr>
-        <th scope="row">{{ order.id }}</th>
-        <td>{{ order.order_num }}</td>
+        <td><a href="{{ order.pk }}"> {{ order.order_num }}</a></td>
+        <td><a href="/case/{{ order.case.pk }}"> {{ order.case.num }}</a></td>
         <td>{{ order.device.name }}</td>
         <td>{{ order.device.pn }}</td>
         <td>{{ order.device.spec }}</td>
-        <td>{{ order.order_name.nickname }}</td>
+        <td>{{ order.order_name }}</td>
         <td>{{ order.create_time | date:"Y-m-d H:i:s" }}</td>
-        <td>{{ order.track_status }}</td>
+          {% if order.track_status == 1 %}
+        <td>未发货</td>
+          {% elif order.track_status == 2 %}
+        <td>已发货</td>
+          {% elif order.track_status == 3 %}
+        <td>已收货</td>
+          {% endif %}
         <td>{{ order.track }} {{ order.track_num }}</td>
     </tbody>
     {% endfor %}
 </table>
 
+{#     页码#}
 <nav aria-label="...">
     <ul class="pagination justify-content-center">
       <li class="page-item disabled">

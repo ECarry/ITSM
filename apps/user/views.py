@@ -129,4 +129,4 @@ class RegisterView(LoginRequiredMixin, View):
         user.name = name
         user.save()
 
-        return render(request, 'register.html', {'msg': "创建成功", 'success_show': 'show'})
+        return render(request, 'register.html', {'msg': "账号创建成功", 'success_show': 'show'})

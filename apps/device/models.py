@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # 类目：类目是一个树状结构的系统，大体上可以分成4-5级。如手机->智能手机->苹果手机类目，
 # 在这里面，手机是一级类目，苹果手机是三级类目，也是叶子类目。
 # SPU：苹果6（商品聚合信息的最小单位），如手机->苹果手机->苹果6，苹果6就是SPU。
@@ -42,11 +43,18 @@ class DeviceSKU(models.Model):
     # on_delete=models.CASCADE
     status = models.SmallIntegerField(choices=STATUS_CHOICES, verbose_name="备件状态")
     manufacturer = models.ForeignKey('Manufacturer', on_delete=models.DO_NOTHING, verbose_name="厂家")
+    stock_in = models.ForeignKey('user.User', related_name="stock_in", null=True, on_delete=models.DO_NOTHING,
+                                 verbose_name="入库人")
+    stock_out = models.ForeignKey('user.User', related_name="stock_out", null=True, blank=True,
+                                  on_delete=models.DO_NOTHING, verbose_name="出库人")
 
     class Meta:
         # admin 页面显示名称
         verbose_name = '备件'
         verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.pn + self.spec
 
 
 # 制造商
