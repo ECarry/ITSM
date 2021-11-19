@@ -19,11 +19,20 @@
     </select>
   </div>
 
+  <div class="col-md-4">
+    <label for="validationDefault04" class="form-label">备件PN</label>
+    <select class="form-select" id="validationDefault04" name="spec" required>
+      {% for spec in specs %}
+      <option value="{{ spec.pn }}">{{ spec.pn }}</option>
+       {% endfor %}
+    </select>
+  </div>
+
   <div class="col-md-6">
     <label for="validationDefault04" class="form-label">备件规格</label>
     <select class="form-select" id="validationDefault04" name="spec" required>
       {% for spec in specs %}
-      <option value="{{ spec.id }}">{{ spec }}</option>
+      <option value="{{ spec.spec }}">{{ spec.spec }}</option>
        {% endfor %}
     </select>
   </div>

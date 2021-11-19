@@ -6,6 +6,7 @@ from datetime import datetime
 from device.models import Device, DeviceSKU
 from case.models import Project
 
+
 # 采购订单列表视图
 class OrderView(LoginRequiredMixin, View):
     def get(self, request):
