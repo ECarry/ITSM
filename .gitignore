@@ -1,4 +1,14 @@
-venv
-.DS_Store
-.idea
-ITSM/settings.py
+# pycharm
+.idea/
+.DS_Store/
+venv/
+ITSM/__pycache__/*
+apps/*/__pycache__/*
+
+# database migrations
+apps/*/migrations
+!apps/*/migrations/__init__.py
+
+# Django stuff
+*.sqlite3
+ITSM/local_settings.py

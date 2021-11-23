@@ -13,6 +13,7 @@ import os.path
 from pathlib import Path
 import sys
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -44,7 +45,7 @@ INSTALLED_APPS = [
     'dashboard',
     'cart',
     'case',
-    'db',
+    'db',   # 注册自建的通用Model类
 ]
 
 MIDDLEWARE = [
@@ -83,13 +84,30 @@ WSGI_APPLICATION = 'ITSM.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'itsm',
-        'USER': 'itsm',
-        'PASSWORD': 'itsm',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
         'HOST': '',
-        'PORT': '3306',
+        'PORT': '',
     }
 }
+
+# memcached
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'Location': '',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            'PASSWORD': '',
+            'CONNECTION_POOL_KWARGS': {
+                'max_connections': 1000,
+                'encoding': 'utf-8'
+            }
+        }
+    }
+}
+
 
 # Django 认证系统使用模型
 AUTH_USER_MODEL = 'user.User'
@@ -140,3 +158,23 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # login url
 LOGIN_URL = '/user/login'
+
+# redis config
+REDIS_HOST = ''
+REDIS_PORT = ''
+REDIS_PASSWD = ''
+
+# session timeout
+SESSION_COOKIE_AGE = 60 * 20
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_SAVE_EVERY_REQUEST = True
+
+# session settings
+# SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+# SESSION_CACHE_ALIAS = "default"
+
+# import local_settings
+try:
+    from .local_settings import *
+except ImportError:
+    pass

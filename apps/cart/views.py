@@ -1,3 +1,5 @@
+import random
+
 from django.shortcuts import render
 from django.views.generic import View
 from .models import *
@@ -35,9 +37,6 @@ class OrderDetailView(LoginRequiredMixin, View):
 # 新建订单
 class NewOrderView(LoginRequiredMixin, View):
     def get(self, request):
-        # 订单编号自动生成
-        order_num = datetime.now().strftime('%Y%m%d%H%M%S')
-
         # 显示备件类型
         types = Device.objects.all()
         # 备件规格
@@ -57,4 +56,6 @@ class NewOrderView(LoginRequiredMixin, View):
         pass
 
     def post(self, request):
-        pass
+        # 订单编号自动生成
+        order_num = datetime.now().strftime('%Y%m%d%H%M%S') + str(random.randrange(1000, 9999))
+
