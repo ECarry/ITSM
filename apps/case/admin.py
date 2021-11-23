@@ -30,4 +30,4 @@ class ServerAdmin(admin.ModelAdmin):
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'project_num')
+    list_display = ('id', 'project_name', 'project_num')

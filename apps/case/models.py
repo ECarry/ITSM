@@ -43,7 +43,7 @@ class Case(BaseModel):
 
 # 项目
 class Project(BaseModel):
-    name = models.CharField(max_length=256, verbose_name="项目名称")
+    project_name = models.CharField(max_length=256, verbose_name="项目名称")
     project_num = models.CharField(max_length=32, verbose_name="项目编号")
     contract_num = models.CharField(max_length=32, verbose_name="合同编号")
     start_time = models.DateField(null=True, verbose_name="开始时间")

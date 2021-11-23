@@ -42,7 +42,7 @@ class LoginView(View):
                 login(request, user)
 
                 # 用户激活，则跳转到主页
-                response = redirect('/dashboard')
+                response = redirect('dashboard:dashboard')  # redirect('namespace:url name')
                 # 是否记住用户名
                 if remember == 'true':
                     response.set_cookie('username', username, max_age=7 * 24 * 3600)
