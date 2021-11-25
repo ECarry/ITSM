@@ -1,5 +1,4 @@
 import random
-
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import View
 from .models import *
@@ -7,6 +6,7 @@ from apps.user.mixin import LoginRequiredMixin
 from datetime import datetime
 from device.models import Device, DeviceSKU
 from case.models import Project
+from django.core.paginator import Paginator
 
 
 # 采购订单列表视图
@@ -14,8 +14,13 @@ class OrderView(LoginRequiredMixin, View):
     def get(self, request):
         orders = Order.objects.all()
 
+        # 分页显示
+        paginator = Paginator(orders, 10)     # 每页10个
+        page_num = request.GET.get('page', 1)  # 获取分页码
+        page_of_orders = paginator.get_page(page_num)
+
         context = {
-            'orders': orders,
+            'orders': page_of_orders
         }
 
         return render(request, 'order.html', context)

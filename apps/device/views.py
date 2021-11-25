@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse, get_object_or_404
 from django.views.generic import View
 from apps.user.mixin import LoginRequiredMixin
 from .models import Device, DeviceSKU
-
+from django.core.paginator import Paginator
 
 # 获取所有设备信息
 # # http://127.0.0.1:8000/device
@@ -11,8 +11,13 @@ class DeviceSKUView(LoginRequiredMixin, View):
         # 获取所有备件信息
         devices = DeviceSKU.objects.all()
 
+        # 分页显示
+        paginator = Paginator(devices, 10)  # 10个
+        page_num = request.GET.get('page', 1)
+        page_of_devices = paginator.get_page(page_num)
+
         context = {
-            'devices': devices,
+            'devices': page_of_devices,
         }
         return render(request, 'device.html', context)
 

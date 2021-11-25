@@ -36,6 +36,7 @@ class Case(BaseModel):
     class Meta:
         verbose_name = "工单"
         verbose_name_plural = verbose_name
+        ordering = ['-id']
 
     def __str__(self):
         return self.num

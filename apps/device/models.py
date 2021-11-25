@@ -52,6 +52,7 @@ class DeviceSKU(models.Model):
         # admin 页面显示名称
         verbose_name = '备件'
         verbose_name_plural = verbose_name
+        ordering = ['-id']
 
     def __str__(self):
         return self.pn

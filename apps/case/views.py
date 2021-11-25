@@ -2,15 +2,24 @@ from django.shortcuts import render, get_object_or_404, redirect, HttpResponse
 from django.views.generic import View
 from .models import *
 from apps.user.mixin import LoginRequiredMixin
+from django.core.paginator import Paginator
 
 
 # 工单视图
 class CaseView(LoginRequiredMixin, View):
     def get(self, request):
         # 获取所有工单
-        context = {'cases': Case.objects.all()}
+        case_all = Case.objects.all()
 
         # 分页显示
+        # https://docs.djangoproject.com/zh-hans/3.2/ref/paginator
+        paginator = Paginator(case_all, 10)     # 每页10个
+        page_num = request.GET.get('page', 1)  # 获取分页码
+        page_of_cases = paginator.get_page(page_num)
+
+        context = {
+            'cases': page_of_cases,
+                   }
 
         return render(request, 'case.html', context)
 
@@ -91,8 +100,14 @@ class NewProjectView(LoginRequiredMixin, View):
 class ProjectView(LoginRequiredMixin, View):
     def get(self, request):
         projects = Project.objects.all()
+
+        # 分页显示
+        paginator = Paginator(projects, 10)     # 每页显示10个
+        page_num = request.GET.get('page', 1)
+        page_of_projects = paginator.get_page(page_num)
+
         context = {
-            'projects': projects
+            'projects': page_of_projects
         }
         return render(request, 'project.html', context)
 

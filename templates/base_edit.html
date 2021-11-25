@@ -15,14 +15,14 @@
                 </li>
 
                 <li class="nav-item">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">编辑订单</button>
+                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">{% block edit_title %}{% endblock %}</button>
                 </li>
 
               </ul>
               <div class="tab-content pt-2">
 
                 <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                  <h5 class="card-title">订单详情</h5>
+                  <h5 class="card-title">{% block detail_title %}{% endblock %}</h5>
 
                     {% block value %}{% endblock %}
                     {% block table %}{% endblock %}

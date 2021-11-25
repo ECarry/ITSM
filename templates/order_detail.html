@@ -11,6 +11,9 @@
 {% block font2_active %}active{% endblock %}
 {% block all_order_active %}class="active"{% endblock %}
 
+{% block detail_title %}订单详情{% endblock %}
+{% block edit_title %}编辑订单{% endblock %}
+
 {% block value %}
 
 <div class="row">
@@ -19,7 +22,7 @@
     <div class="col-lg-1 col-md-1 label ">订单编号</div>
     <div class="col-lg-3 col-md-3">{{ order.order_num }}</div>
     <div class="col-lg-1 col-md-1 label ">相关工单</div>
-    <div class="col-lg-3 col-md-3"><a href="/case/{{ order.case.pk }}">{{ order.case }}</a></div>
+    <div class="col-lg-3 col-md-3"><a href="/case/detail/{{ order.case.pk }}">{{ order.case }}</a></div>
 </div>
 
 <div class="row">
@@ -44,7 +47,24 @@
     <div class="col-lg-1 col-md-1 label ">物流单号</div>
     <div class="col-lg-3 col-md-3">{{ order.track_num }}</div>
     <div class="col-lg-1 col-md-1 label ">状态</div>
-    <div class="col-lg-3 col-md-3">{{ order.track_status }}</div>
+    {% if order.track_status == 1 %}
+    <div class="col-lg-3 col-md-3">未发货</div>
+    {% endif %}
+    {% if order.track_status == 2 %}
+    <div class="col-lg-3 col-md-3">已发货</div>
+    {% endif %}
+    {% if order.track_status == 3 %}
+    <div class="col-lg-3 col-md-3">已签收</div>
+    {% endif %}
+</div>
+
+<div class="row">
+    <div class="col-lg-1 col-md-1 label ">收件人</div>
+    <div class="col-lg-3 col-md-3">{{ order.address.addressee }}</div>
+    <div class="col-lg-1 col-md-1 label ">电话</div>
+    <div class="col-lg-3 col-md-3">{{ order.address.addressee.mobile }}</div>
+    <div class="col-lg-1 col-md-1 label ">地址</div>
+    <div class="col-lg-3 col-md-3">{{ order.address }}</div>
 </div>
 
 {% endblock %}
@@ -65,5 +85,75 @@
     <input name="fullName" type="text" class="form-control" id="fullName" value="Kevin Anderson">
   </div>
 </div>
+
+{% endblock %}
+
+{% block table %}
+
+<h5 class="card-title">物流详情</h5>    <!-- 物流详情 -->
+<section class="section dashboard">
+  <div class="row">
+    <div class="col-lg-12">
+      <!-- Recent Activity -->
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title"></h5>
+          <div class="activity">
+
+            <div class="activity-item d-flex">
+              <div class="activite-label">2021-11-15 周一 14:52:13</div>
+              <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
+              <div class="activity-content">
+                  包裹已签收，期待您的再次光临！
+              </div>
+            </div><!-- End activity item-->
+
+            <div class="activity-item d-flex">
+              <div class="activite-label">2021-11-15 周一 14:43:08</div>
+              <i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
+              <div class="activity-content">
+                  【厦门市】配送员徐旭 15951401352正为您派送，感谢您的耐心等待
+              </div>
+            </div><!-- End activity item-->
+
+            <div class="activity-item d-flex">
+              <div class="activite-label">2021-11-15 周一 14:43:08</div>
+              <i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
+              <div class="activity-content">
+                【厦门市】订单已到达【福建厦门前埔二部】
+              </div>
+            </div><!-- End activity item-->
+
+            <div class="activity-item d-flex">
+              <div class="activite-label">2021-11-13 周六 01:24:16</div>
+              <i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
+              <div class="activity-content">
+                【厦门市】订单已到达【福建厦门前埔二部】
+              </div>
+            </div><!-- End activity item-->
+
+            <div class="activity-item d-flex">
+              <div class="activite-label">2021-11-12 周五 16:21:12</div>
+              <i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
+              <div class="activity-content">
+                【厦门市】订单已到达【福建厦门转运中心】
+              </div>
+            </div><!-- End activity item-->
+
+            <div class="activity-item d-flex">
+              <div class="activite-label">2021-11-11 周四 00:54:32</div>
+              <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>
+              <div class="activity-content">
+                  商品已经下单
+              </div>
+            </div><!-- End activity item-->
+
+          </div>
+        </div>
+      </div><!-- End Recent Activity -->
+    </div>
+  </div>
+</section>
+<!-- End 物流详情 -->
 
 {% endblock %}

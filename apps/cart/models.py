@@ -7,7 +7,7 @@ class Order(BaseModel):
     TRACK_STATUS_CHOICES = {
         (1, "未发货"),
         (2, "已发货"),
-        (3, "已收货")
+        (3, "已签收")
     }
     order_num = models.CharField(max_length=14, verbose_name="订单编号")
     track_num = models.CharField(max_length=32, null=True, blank=True, verbose_name="物流单号")
@@ -23,6 +23,7 @@ class Order(BaseModel):
     class Meta:
         verbose_name = "采购订单"
         verbose_name_plural = verbose_name
+        ordering = ['-id']
 
 
 # 物流公司
