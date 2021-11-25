@@ -1,6 +1,6 @@
 import random
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import View
 from .models import *
 from apps.user.mixin import LoginRequiredMixin
@@ -25,7 +25,13 @@ class OrderView(LoginRequiredMixin, View):
 class OrderDetailView(LoginRequiredMixin, View):
     def get(self, request, order_pk):
         # 根据 ID 获取单个订单详情
-        pass
+        order = get_object_or_404(Order, pk=order_pk)
+
+        context = {
+            'order': order
+        }
+
+        return render(request, 'order_detail.html', context)
 
     def post(self, request):
         # 接收 form 表单数据

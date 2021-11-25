@@ -54,7 +54,7 @@ class DeviceSKU(models.Model):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return self.pn + self.spec
+        return self.pn
 
 
 # 制造商

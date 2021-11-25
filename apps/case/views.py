@@ -20,40 +20,8 @@ class CaseDetailView(LoginRequiredMixin, View):
     def get(self, request, case_pk):
         # 获取单个工单，id
         case = get_object_or_404(Case, pk=case_pk)
-
-        # case detail
-        pk = case_pk
-        num = case.num
-        status = case.status
-        register = case.register
-        case_context = case.context
-        petitioner_name = case.petitioner.name
-        petitioner_email = case.petitioner.email
-        petitioner_phone = case.petitioner.phone
-        petitioner_depart = case.petitioner.department.name
-        petitioner_company = case.petitioner.company.name
-        project = case.server.project.name
-        project_num = case.server.project.project_num
-        server_name = case.server.name
-        server_sn = case.server.sn
-        server_manufacturer = case.server.manufacturer
-
         context = {
-            'pk': pk,
-            'num': num,
-            'status': status,
-            'register': register,
-            'case_context': case_context,
-            'petitioner_name': petitioner_name,
-            'petitioner_email': petitioner_email,
-            'petitioner_phone': petitioner_phone,
-            'petitioner_depart': petitioner_depart,
-            'petitioner_company': petitioner_company,
-            'project': project,
-            'project_num': project_num,
-            'server_name': server_name,
-            'server_sn': server_sn,
-            'server_manufacturer': server_manufacturer
+            'case': case
         }
 
         return render(request, 'case_detail.html', context)
@@ -76,6 +44,7 @@ class NewProjectView(LoginRequiredMixin, View):
     def post(self, request):
         print(request.POST)
         project_num = request.POST.get('project_num')
+
         # 判断是否已存在项目
         try:
             p = Project.objects.filter(project_num=project_num)

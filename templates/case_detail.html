@@ -1,48 +1,65 @@
-{% extends 'base.html' %}
-{% block title %}工单详情-{{ num }}{% endblock %}
-{% block h1_title %}{{ num }}{% endblock %}
+{% extends 'base_edit.html' %}
+{% block title %}工单详情-{{ case.num }}{% endblock %}
+{% block h1_title %}{{ case.num }}{% endblock %}
 {% block h2_title %}工单管理{% endblock %}
 {% block h3_title %}
     <li class="breadcrumb-item active"><a href="/case">所有工单</a></li>
 {% endblock %}
-{% block h4_title %}<li class="breadcrumb-item active">{{ num }}</li>{% endblock %}
+{% block h4_title %}<li class="breadcrumb-item active">{{ case.num }}</li>{% endblock %}
 {% block case_show %}show{% endblock %}
 {% block font2_active %}active{% endblock %}
 {% block all_case_active %}class="active"{% endblock %}
 
 
-{% block content %}
-<div class="col-md-4"><b>客户名称：</b>{{ petitioner_company }}<br><br></div>
-<div class="col-md-4"><b>申请人：</b>{{ petitioner_name }}<br><br></div>
-<b>申请部门：</b> {{ petitioner_depart }}<br><br>
-<b>申请人邮箱：</b> {{ petitioner_email }}<br><br>
-<b>申请人电话：</b> {{ petitioner_phone }}<br><br>
 
-<table class="table">
-    <thead>
-      <tr>
-        <th scope="col">状态</th>
-        <th scope="col">项目名称</th>
-        <th scope="col">项目编号</th>
-        <th scope="col">响应时间（小时）</th>
-        <th scope="col">到达现场时间（小时）</th>
-        <th scope="col">服务时间（小时）</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="badge bg-success"><i class="bi bi-check-circle me-1"></i></span></td>
-        <td>{{ project }}</td>
-        <td>{{ project_num }}</td>
-        <td>1</td>
-        <td>4</td>
-        <td>8</td>
-      </tr>
-    </tbody>
-</table>
-    
-<b>设备型号：</b>{{ server_manufacturer }} {{ server_name }}<br><br>
-<b>序列号：</b>{{ server_sn }}<br><br>
-<b>详情：</b>{{ case_context }}<br><br>
+{% block value %}
+<div class="row">
+    <div class="col-lg-1 col-md-1 label ">客户名称</div>
+    <div class="col-lg-3 col-md-3">{{ case.petitioner.company.name }}</div>
+    <div class="col-lg-1 col-md-1 label ">申请部门</div>
+    <div class="col-lg-3 col-md-3">{{ case.petitioner.department.name }}</div>
+</div>
+
+<div class="row">
+    <div class="col-lg-1 col-md-1 label ">申请人</div>
+    <div class="col-lg-3 col-md-3">{{ case.petitioner.name }}</div>
+    <div class="col-lg-1 col-md-1 label ">邮箱</div>
+    <div class="col-lg-3 col-md-3">{{ case.petitioner.email }}</div>
+    <div class="col-lg-1 col-md-1 label ">电话</div>
+    <div class="col-lg-3 col-md-3">{{ case.petitioner.phone }}</div>
+</div>
+
+<div class="row">
+    <div class="col-lg-1 col-md-1 label ">设备型号</div>
+    <div class="col-lg-3 col-md-3">{{ case.server.manufacturer }} {{ case.server.name }}</div>
+    <div class="col-lg-1 col-md-1 label ">序列号</div>
+    <div class="col-lg-3 col-md-3">{{ case.server.sn }}</div>
+    <div class="col-lg-1 col-md-1 label ">位置</div>
+    <div class="col-lg-3 col-md-3">{{ case.area }}</div>
+</div>
+
+<h5 class="card-title">详情</h5>
+<p class="small fst-italic">{{ case.context }}</p>
 {% endblock %}
 
+
+{% block table %}
+<table class="table">
+<thead>
+  <tr>
+    <th scope="col">项目名称</th>
+    <th scope="col">响应时间（小时）</th>
+    <th scope="col">到达现场时间（小时）</th>
+    <th scope="col">服务时间（小时）</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>{{ case.server.project.project_name }}（{{ case.server.project.project_num }}）</td>
+    <td>1</td>
+    <td>4</td>
+    <td>8</td>
+  </tr>
+</tbody>
+</table>
+{% endblock %}

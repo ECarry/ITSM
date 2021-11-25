@@ -55,7 +55,7 @@ class Project(BaseModel):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return self.name
+        return self.project_name
 
 
 # 申请单位
