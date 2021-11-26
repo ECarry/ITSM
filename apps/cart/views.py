@@ -7,6 +7,7 @@ from datetime import datetime
 from device.models import Device, DeviceSKU
 from case.models import Project, Case
 from django.core.paginator import Paginator
+from django.contrib import messages
 
 
 # 采购订单列表视图
@@ -52,7 +53,8 @@ class OrderDetailView(LoginRequiredMixin, View):
 
         # 工单不存在，报错，返回
         if not c:
-            return HttpResponse('工单不存在')
+            messages.error(request, '工单不存在')
+            return redirect('order:order_list')
 
         case = Case.objects.get(num=case_num)
         case_id = case.id
@@ -65,6 +67,7 @@ class OrderDetailView(LoginRequiredMixin, View):
         order = Order.objects.filter(id=order_pk)
         # 更新订单详情
         order.update(**info)
+        messages.success(request, '修改成功')
         return redirect('order:order_list')
 
 
