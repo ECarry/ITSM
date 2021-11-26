@@ -20,6 +20,7 @@
         <th scope="col">相关工单</th>
         <th scope="col">物品</th>
         <th scope="col">规格</th>
+        <th scope="col">采购数量</th>
         <th scope="col">采购人</th>
         <th scope="col">采购时间</th>
         <th scope="col">物流状态</th>
@@ -29,10 +30,11 @@
     <tbody>
     {% for order in orders %}
       <tr>
-        <td><a href="{{ order.pk }}"> {{ order.order_num }}</a></td>
+        <td><a href="/order/detail/{{ order.pk }}"> {{ order.order_num }}</a></td>
         <td><a href="/case/detail/{{ order.case.pk }}"> {{ order.case.num }}</a></td>
         <td>{{ order.device.name }}</td>
         <td>{{ order.device.spec }}</td>
+        <td>{{ order.count }}</td>
         <td>{{ order.order_name }}</td>
         <td>{{ order.create_time | date:"Y-m-d H:i:s" }}</td>
           {% if order.track_status == 1 %}
@@ -42,7 +44,11 @@
           {% elif order.track_status == 3 %}
         <td>已收货</td>
           {% endif %}
-        <td>{{ order.track_num }}</td>
+      {% if order.track == None %}
+        <td>-</td>
+      {% else %}
+        <td>{{ order.track }} {{ order.track_num }}</td>
+      {% endif %}
     </tbody>
     {% endfor %}
 </table>

@@ -51,7 +51,6 @@ class NewProjectView(LoginRequiredMixin, View):
 
     # post 新建项目
     def post(self, request):
-        print(request.POST)
         project_num = request.POST.get('project_num')
 
         # 判断是否已存在项目
@@ -117,13 +116,13 @@ class ProjectDetailView(LoginRequiredMixin, View):
     # get 显示项目详情
     def get(self, request, project_pk):
         # id 获取单个项目详情
-        projects = get_object_or_404(Project, pk=project_pk)
+        project = get_object_or_404(Project, pk=project_pk)
 
         # 获取客户公司
         companys = Company.objects.all()
 
         context = {
-            'project': projects,
+            'project': project,
             'companys': companys
         }
 

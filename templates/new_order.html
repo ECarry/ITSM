@@ -12,54 +12,41 @@
 {% csrf_token %}
   <div class="col-md-2">
     <label for="validationDefault04" class="form-label">备件类型</label>
-    <select class="form-select" id="validationDefault04" name="type" required>
+    <select class="form-select" id="validationDefault04" name="type_id" required>
       {% for type in types %}
-      <option {{ type.id }}>{{ type.name }}</option>
+      <option value="{{ type.id }}">{{ type.name }}</option>
       {% endfor %}
     </select>
   </div>
 
-  <div class="col-md-4">
-    <label for="validationDefault04" class="form-label">备件PN</label>
-    <select class="form-select" id="validationDefault04" name="spec" required>
+  <div class="col-md-9">
+    <label for="validationDefault04" class="form-label">备件型号规格</label>
+    <select class="form-select" id="validationDefault04" name="device_id" required>
       {% for spec in specs %}
-      <option value="{{ spec.pn }}">{{ spec.pn }}</option>
+      <option value="{{ spec.id }}">{{ spec.pn }} {{ spec.spec }}</option>
        {% endfor %}
     </select>
   </div>
 
-  <div class="col-md-6">
-    <label for="validationDefault04" class="form-label">备件规格</label>
-    <select class="form-select" id="validationDefault04" name="spec" required>
-      {% for spec in specs %}
-      <option value="{{ spec.spec }}">{{ spec.spec }}</option>
-       {% endfor %}
-    </select>
-  </div>
+    <div class="col-md-1">
+      <label for="inputEmail5" class="form-label">采购数量</label>
+      <input type="number" class="form-control" name="count" value="1">
+    </div>
 
   <div class="col-md-12">
     <label for="validationDefault04" class="form-label">相关项目</label>
-    <select class="form-select" id="validationDefault04" name="project" required>
+    <select class="form-select" id="validationDefault04" name="project_id" required>
       {% for project in projects %}
       <option value="{{ project.id }}">{{ project.project_name }}（{{ project.project_num }}）</option>
       {% endfor %}
     </select>
   </div>
 
-  <div class="col-md-2">
-    <label for="validationDefault04" class="form-label">收件人</label>
-    <select class="form-select" id="validationDefault04" name="addressee" required >
-      {% for ad in address %}
-      <option value="{{ ad.addressee.id }}">{{ ad.addressee }}</option>
-      {% endfor %}
-    </select>
-  </div>
-
   <div class="col-md-10">
     <label for="validationDefault04" class="form-label">收货地址</label>
-    <select class="form-select" id="validationDefault04" name="address" required>
+    <select class="form-select" id="validationDefault04" name="address_id" required>
       {% for ad in address %}
-      <option value="{{ ad.id }}">{{ ad.address }}</option>
+      <option value="{{ ad.id }}">{{ ad.address }}（{{ ad.addressee }}：{{ ad.addressee.mobile }}）</option>
       {% endfor %}
     </select>
   </div>

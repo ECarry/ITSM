@@ -9,7 +9,7 @@ class Order(BaseModel):
         (2, "已发货"),
         (3, "已签收")
     }
-    order_num = models.CharField(max_length=14, verbose_name="订单编号")
+    order_num = models.CharField(max_length=18, verbose_name="订单编号")
     track_num = models.CharField(max_length=32, null=True, blank=True, verbose_name="物流单号")
     track = models.ForeignKey('TrackCompany', on_delete=models.DO_NOTHING, null=True, blank=True, verbose_name="物流公司")
     track_status = models.SmallIntegerField(choices=TRACK_STATUS_CHOICES, default=1, verbose_name="物流状态")
@@ -19,6 +19,7 @@ class Order(BaseModel):
     project = models.ForeignKey('case.Project', on_delete=models.DO_NOTHING, verbose_name="相关项目")
     address = models.ForeignKey('Address', on_delete=models.DO_NOTHING, verbose_name="收货地址")
     case = models.ForeignKey('case.Case', on_delete=models.DO_NOTHING, null=True, blank=True, verbose_name="工单")
+    count = models.SmallIntegerField(default=1, verbose_name="采购数量")
 
     class Meta:
         verbose_name = "采购订单"
