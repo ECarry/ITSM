@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'cart',
     'case',
     'db',   # 注册自建的通用Model类
+    'utils',    # tools
 ]
 
 MIDDLEWARE = [
@@ -172,6 +173,10 @@ SESSION_SAVE_EVERY_REQUEST = True
 # session settings
 # SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 # SESSION_CACHE_ALIAS = "default"
+
+# kuaidi100
+KUAIDI100_KEY = ''
+KUAIDI100_CUSTOMER = ''
 
 # import local_settings
 try:

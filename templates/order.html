@@ -42,7 +42,6 @@
         <th scope="col">采购数量</th>
         <th scope="col">采购人</th>
         <th scope="col">采购时间</th>
-        <th scope="col">物流状态</th>
         <th scope="col">物流单号</th>
       </tr>
     </thead>
@@ -56,18 +55,7 @@
         <td>{{ order.count }}</td>
         <td>{{ order.order_name }}</td>
         <td>{{ order.create_time | date:"Y-m-d H:i:s" }}</td>
-          {% if order.track_status == 1 %}
-        <td>未发货</td>
-          {% elif order.track_status == 2 %}
-        <td>已发货</td>
-          {% elif order.track_status == 3 %}
-        <td>已收货</td>
-          {% endif %}
-      {% if order.track == None %}
-        <td>-</td>
-      {% else %}
-        <td>{{ order.track }} {{ order.track_num }}</td>
-      {% endif %}
+        <td>{{ order.track|default_if_none:"-" }} {{ order.track_num|default_if_none:"-" }}</td>
     </tbody>
     {% endfor %}
 </table>

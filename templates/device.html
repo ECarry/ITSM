@@ -14,34 +14,24 @@
 <table class="table">
                 <thead>
                   <tr>
-                    <th scope="col">#</th>
                     <th scope="col">名称</th>
                     <th scope="col">型号（P/N）</th>
                     <th scope="col">序列号（S/N）</th>
+                    <th scope="col">入库人员</th>
                     <th scope="col">入库时间</th>
-                    <th scope="col">出库时间</th>
-                    <th scope="col">状态</th>
                     <th scope="col">厂家</th>
+                    <th scope="col">库存</th>
+                    <th scope="col">是否出库</th>
                   </tr>
                 </thead>
                 <tbody>
                   {% for device in devices %}
                   <tr>
-                    <th scope="row"><a href="{{ deice.id }} "> {{ deice.id }} </a></th>
                     <td>{{ device.name }}</td>
                     <td>{{ device.pn }}</td>
                     <td>{{ device.sn }}</td>
+                    <td>{{ device.stock_in }}</td>
                     <td>{{ device.created_time }}</td>
-                    <td>{{ device.last_time }}</td>
-                    {% if device.status == 1 %}
-                    <td>入库</td>
-                    {% elif device.status == 2 %}
-                    <td>使用</td>
-                    {% elif device.status == 3 %}
-                    <td>损坏</td>
-                    {% elif device.status == 4 %}
-                    <td>退货</td>
-                    {% endif %}
                     <td>{{ device.manufacturer }}</td>
                   </tr>
                   {% endfor %}

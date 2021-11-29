@@ -30,6 +30,7 @@ class Order(BaseModel):
 # 物流公司
 class TrackCompany(models.Model):
     name = models.CharField(max_length=32, verbose_name="物流公司")
+    code = models.CharField(max_length=32, verbose_name="公司编码")
 
     class Meta:
         verbose_name = "物流公司"
