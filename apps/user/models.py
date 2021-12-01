@@ -37,3 +37,4 @@ class User(AbstractUser):
         db_table = 'user'
         verbose_name = '成员'
         verbose_name_plural = verbose_name
+

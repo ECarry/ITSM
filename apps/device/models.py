@@ -28,7 +28,7 @@ class DeviceSKU(models.Model):
         (4, "退货")
     }
     name = models.ForeignKey('Device', on_delete=models.DO_NOTHING, verbose_name="备件名称")
-    sn = models.CharField(max_length=32, null=True, blank=True, verbose_name="序列号")
+    sn = models.CharField(max_length=32, null=True, blank=True, unique=True, verbose_name="序列号")
     pn = models.CharField(max_length=32, verbose_name="型号")
     spec = models.CharField(max_length=32, null=True, verbose_name="规格")
     unit = models.SmallIntegerField(default=1, verbose_name="备件数")

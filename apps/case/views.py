@@ -1,11 +1,41 @@
 from django.shortcuts import render, get_object_or_404, redirect, HttpResponse
 from django.views.generic import View
+from .forms import CaseForm
 from .models import *
 from apps.user.mixin import LoginRequiredMixin
 from django.core.paginator import Paginator
 
 
-# 工单视图
+# 新建工单视图 form
+class NewCaseFormView(LoginRequiredMixin, View):
+    def get(self, request):
+        form = CaseForm()
+
+        context = {
+            'form': form
+        }
+
+        return render(request, 'new_case_form.html', context)
+
+    def post(self, request):
+        # 当前登录用户
+        current_user = request.user
+
+        # 初始化值，无需用户键入的值
+        case_detail = Case(register_id=current_user.id)
+
+        form = CaseForm(request.POST, instance=case_detail)
+        if form.is_valid():
+            form.save()
+            return redirect('case:case_list')
+        else:
+            context = {
+                'form': form
+            }
+            return render(request, 'new_case_form.html', context=context)
+
+
+# 工单列表视图
 class CaseView(LoginRequiredMixin, View):
     def get(self, request):
         # 获取所有工单

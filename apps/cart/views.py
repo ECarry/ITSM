@@ -9,6 +9,7 @@ from case.models import Project, Case
 from django.core.paginator import Paginator
 from django.contrib import messages
 from utils.track import KuaiDi100
+from .forms import *
 import json
 
 
@@ -75,20 +76,6 @@ class OrderDetailView(LoginRequiredMixin, View):
         return render(request, 'order_detail.html', context)
 
     def post(self, request, order_pk):
-        # case
-        case_num = request.POST.get('case_num')
-        # try:
-        #     c = Case.objects.filter(num=case_num)
-        # except Case.DoesNotExist:
-        #     c = None
-
-        # 工单不存在，报错，返回
-        # if not c:
-        #     messages.error(request, '工单不存在')
-        #     return redirect('order:order_list')
-        # case = Case.objects.get(num=case_num)
-        # case_id = case.id
-
         # 接收 form 表单数据
         info = request.POST.dict()
         del info['csrfmiddlewaretoken']
@@ -102,40 +89,30 @@ class OrderDetailView(LoginRequiredMixin, View):
         return redirect('order:order_list')
 
 
-# 新建订单
-class NewOrderView(LoginRequiredMixin, View):
+# 新建订单 form
+class NewOrderFormView(LoginRequiredMixin, View):
     def get(self, request):
-        # 备件数量
-        order = Order.objects.all()
-        # 显示备件类型
-        types = Device.objects.all()
-        # 备件规格
-        specs = DeviceSKU.objects.all()
-        # 项目
-        projects = Project.objects.all()
-        # 收货地址
-        address = Address.objects.all()
-        # 响应新建订单页面
+        form = OrderForm()
+
         context = {
-            'types': types,
-            'specs': specs,
-            'projects': projects,
-            'address': address,
-            'order': order,
+            'form': form
         }
-        return render(request, 'new_order.html', context)
-        pass
+
+        return render(request, 'new_order_form.html', context)
 
     def post(self, request):
-        # 订单编号自动生成
+        # 订单号
         order_num = datetime.now().strftime('%Y%m%d%H%M%S') + str(random.randrange(1000, 9999))
-        # 获取当前用户 ID
-        current_user_id = request.user.id
-        post = request.POST.dict()
-        del post['csrfmiddlewaretoken']
-        post['order_num'] = order_num
-        post['order_name_id'] = current_user_id
-        print(post)
-        # 保存数据
-        Order.objects.create(**post)
+        current_user = request.user
+
+        # 初始化值，无需用户键入的值（订单编号自动生成，登记人为当前登入用户）
+        order_detail = Order(order_num=order_num, order_name_id=current_user.id)
+
+        form = OrderForm(data=request.POST, instance=order_detail)
+        if form.is_valid():
+            print('form is ok')
+            form.save()
+
         return redirect('order:order_list')
+
+

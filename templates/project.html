@@ -15,9 +15,7 @@
  <table class="table">
     <thead>
       <tr>
-        <th scope="col">#</th>
         <th scope="col">项目编号</th>
-        <th scope="col">签订日期</th>
         <th scope="col">合同编号</th>
         <th scope="col">开工日期</th>
         <th scope="col">合同名称</th>
@@ -28,9 +26,7 @@
     <tbody>
       {% for project in projects %}
       <tr>
-        <th scope="row">{{ project.id }}</th>
         <td><a href="/case/project/{{ project.id }}">{{ project.project_num }}</a></td>
-        <td>{{ project.create_time | date:"Y-m-d" }}</td>
         <td>{{ project.contract_num }}</td>
         <td>{{ project.start_time | date:"Y-m-d" }}</td>
         <td>{{ project.project_name }}</td>

@@ -20,7 +20,7 @@ class Case(BaseModel):
         (1, "硬件服务"),
         (2, "技术支撑")
     }
-    num = models.CharField(max_length=32, verbose_name="工单编号")
+    num = models.CharField(max_length=32, unique=True, verbose_name="工单编号")
     status = models.SmallIntegerField(choices=STATUS_CHOICES, default=2, verbose_name="工单状态")
     level = models.SmallIntegerField(choices=LEVEL_CHOICES, default=3, verbose_name="工单等级")
     type = models.SmallIntegerField(choices=TYPE_CHOICES, default=1, verbose_name="服务类型")
@@ -43,13 +43,13 @@ class Case(BaseModel):
 
 
 # 项目
-class Project(BaseModel):
+class Project(models.Model):
     project_name = models.CharField(max_length=256, verbose_name="项目名称")
     project_num = models.CharField(max_length=32, verbose_name="项目编号")
     contract_num = models.CharField(max_length=32, verbose_name="合同编号")
     start_time = models.DateField(null=True, verbose_name="开始时间")
     end_time = models.DateField(null=True, verbose_name="结束时间")
-    company = models.ForeignKey('Company', on_delete=models.DO_NOTHING, verbose_name="客户名称")
+    company = models.CharField(max_length=256, null=True, verbose_name="客户名称")
 
     class Meta:
         verbose_name = "项目"

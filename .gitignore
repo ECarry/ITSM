@@ -2,8 +2,8 @@
 .idea/
 .DS_Store/
 venv/
-ITSM/__pycache__/*
-apps/*/__pycache__/*
+ITSM/__pycache__/*.pyc
+apps/*/__pycache__/*.pyc
 
 # database migrations
 apps/*/migrations
@@ -12,3 +12,20 @@ apps/*/migrations
 # Django stuff
 *.sqlite3
 ITSM/local_settings.py
+*.pyc
+
+apps/cart/__pycache__/models.cpython-39.pyc
+apps/cart/__pycache__/urls.cpython-39.pyc
+apps/cart/__pycache__/views.cpython-39.pyc
+apps/case/__pycache__/admin.cpython-39.pyc
+apps/case/__pycache__/models.cpython-39.pyc
+apps/case/__pycache__/urls.cpython-39.pyc
+apps/case/__pycache__/views.cpython-39.pyc
+apps/dashboard/__pycache__/urls.cpython-39.pyc
+apps/dashboard/__pycache__/views.cpython-39.pyc
+apps/device/__pycache__/models.cpython-39.pyc
+apps/device/__pycache__/views.cpython-39.pyc
+apps/user/__pycache__/models.cpython-39.pyc
+apps/user/__pycache__/views.cpython-39.pyc
+ITSM/__pycache__/settings.cpython-39.pyc
+ITSM/__pycache__/urls.cpython-39.pyc
