@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
-{% block title %}所有订单{% endblock %}
-{% block h1_title %}所有订单{% endblock %}
-{% block h2_title %}采购管理{% endblock %}
+{% block title %}所有设备{% endblock %}
+{% block h1_title %}所有设备{% endblock %}
+{% block h2_title %}工单管理{% endblock %}
 {% block h3_title %}
-    <li class="breadcrumb-item active">所有订单</li>
+    <li class="breadcrumb-item active">所有设备</li>
 {% endblock %}
-{% block order_show %}show{% endblock %}
+{% block case_show %}show{% endblock %}
 {% block font2_active %}active{% endblock %}
-{% block all_order_active %}class="active"{% endblock %}
-{% block new %}<div><a href="/order/new_order"><button type="button" class="btn btn-outline-primary">+ 新建</button></a></div>{% endblock %}
+{% block all_server_active %}class="active"{% endblock %}
+{% block new %}<div><a href="/case/server/new_server"><button type="button" class="btn btn-outline-primary">+ 新建</button></a></div>{% endblock %}
 
  {% block content %}
 
@@ -35,27 +35,27 @@
 <table class="table">
     <thead>
       <tr>
-        <th scope="col">订单编号</th>
+        <th scope="col">设备</th>
+        <th scope="col">SN</th>
+        <th scope="col">CPU</th>
+        <th scope="col">MEM</th>
+        <th scope="col">DISK</th>
+        <th scope="col">POWER</th>
+        <th scope="col">相关项目</th>
         <th scope="col">相关工单</th>
-        <th scope="col">物品</th>
-        <th scope="col">规格</th>
-        <th scope="col">采购数量</th>
-        <th scope="col">采购人</th>
-        <th scope="col">采购时间</th>
-        <th scope="col">物流单号</th>
       </tr>
     </thead>
     <tbody>
-    {% for order in orders %}
+    {% for server in servers %}
       <tr>
-        <td><a href="/order/detail/{{ order.pk }}"> {{ order.order_num }}</a></td>
-        <td><a href="/case/detail/{{ order.case.pk }}"> {{ order.case.num|default_if_none:"-" }}</a></td>
-        <td>{{ order.device.name }}</td>
-        <td>{{ order.device.spec }}</td>
-        <td>{{ order.count }}</td>
-        <td>{{ order.order_name }}</td>
-        <td>{{ order.create_time | date:"Y-m-d H:i:s" }}</td>
-        <td>{{ order.track|default_if_none:"-" }} {{ order.track_num|default_if_none:"-" }}</td>
+        <td><a href="#"> {{ server.manufacturer }}{{ server.name }}</a></td>
+        <td>{{ server.sn }}</td>
+        <td>{{ server.cpu| default_if_none:'-' }}</td>
+        <td>{{ server.mem| default_if_none:'-' }}</td>
+        <td>{{ server.disk| default_if_none:'-' }}</td>
+        <td>{{ server.power| default_if_none:'-' }}</td>
+        <td>{{ server.project| default_if_none:'-' }}</td>
+        <td></td>
       </tr>
     {% endfor %}
     </tbody>

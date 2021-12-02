@@ -101,13 +101,13 @@ class Petitioner(models.Model):
 
 # 设备 server
 class Server(models.Model):
-    SUPPORT_CHOICES = {
-        (1, "维保"),
-        (2, "单次维修")
-    }
-    name = models.CharField(max_length=32, verbose_name="设备型号")
-    sn = models.CharField(max_length=32, verbose_name="设备序列号")
-    support = models.SmallIntegerField(choices=SUPPORT_CHOICES, verbose_name="维保状态")
+    name = models.CharField(max_length=32, verbose_name="设备名称")
+    sn = models.CharField(max_length=32, unique=True, verbose_name="序列号")
+    cpu = models.CharField(max_length=32, null=True, blank=True, verbose_name="cpu")
+    mem = models.CharField(max_length=32, null=True, blank=True, verbose_name="mem")
+    disk = models.CharField(max_length=32, null=True, blank=True, verbose_name="disk")
+    motherboard = models.CharField(max_length=32, null=True, blank=True, verbose_name="motherboard")
+    power = models.CharField(max_length=32, null=True, blank=True, verbose_name="power")
     manufacturer = models.ForeignKey('device.Manufacturer', on_delete=models.DO_NOTHING, verbose_name="厂家")
     project = models.ForeignKey('Project', on_delete=models.DO_NOTHING, null=True, verbose_name="所属项目")
 

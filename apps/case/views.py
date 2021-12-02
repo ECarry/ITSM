@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect, HttpResponse
 from django.views.generic import View
-from .forms import CaseForm
+from .forms import CaseForm, ServerForm
 from .models import *
 from apps.user.mixin import LoginRequiredMixin
 from django.core.paginator import Paginator
@@ -30,8 +30,10 @@ class NewCaseFormView(LoginRequiredMixin, View):
             return redirect('case:case_list')
         else:
             context = {
-                'form': form
+                'form': form,
+                'show': 'show'
             }
+            print(form.errors)
             return render(request, 'new_case_form.html', context=context)
 
 
@@ -169,3 +171,44 @@ class ProjectDetailView(LoginRequiredMixin, View):
         )
 
         return redirect('case:project_list')
+
+
+# 服务器列表视图
+class ServerView(LoginRequiredMixin, View):
+    def get(self, request):
+        # 返回所有服务器列表
+        servers = Server.objects.all()
+
+        context = {
+            'servers': servers
+        }
+
+        return render(request, 'server.html', context)
+
+
+# 新建服务器视图
+class NewServerFormView(LoginRequiredMixin, View):
+    def get(self, request):
+        form = ServerForm()
+
+        context = {
+            'form': form,
+        }
+
+        return render(request, 'new_server_form.html', context)
+
+    def post(self, request):
+        form = ServerForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            print(form.cleaned_data)
+            return redirect('/case/server')
+        else:
+            print(form.errors)
+            context = {
+                'form': form,
+                'show': 'show'
+            }
+
+            return render(request, 'new_server_form.html', context)

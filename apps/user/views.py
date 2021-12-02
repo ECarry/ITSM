@@ -7,8 +7,6 @@ from .mixin import LoginRequiredMixin
 
 
 # login view http://127.0.0.1:8000/user/login
-
-
 class LoginView(View):
     def get(self, request):
         # 判断是否记住用户名
@@ -44,6 +42,7 @@ class LoginView(View):
                 # 用户激活，则跳转到主页
                 response = redirect('dashboard:dashboard')  # redirect('namespace:url name')
                 # 是否记住用户名
+
                 if remember == 'true':
                     response.set_cookie('username', username, max_age=7 * 24 * 3600)
                 else:

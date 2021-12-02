@@ -40,11 +40,7 @@
 
         <div class="col-md-6">
           <label for="inputState" class="form-label">客户名称</label>
-          <select id="inputState" class="form-select" name="company_id">
-            {% for c in company %}
-            <option value="{{ c.id }}">{{ c.name }}</option>
-            {% endfor %}
-          </select>
+            <input type="text" class="form-control" name="company" required>
         </div>
 
         <div class="col-md-12">

@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
-{% block title %}新建工单{% endblock %}
-{% block h1_title %}新建工单{% endblock %}
+{% block title %}新建设备{% endblock %}
+{% block h1_title %}新建设备{% endblock %}
 {% block h2_title %}工单管理{% endblock %}
-{% block h3_title %}<li class="breadcrumb-item"><a href="/case">所有工单</a></li>{% endblock %}
-{% block h4_title %}<li class="breadcrumb-item active">新建工单</li>{% endblock %}
+{% block h3_title %}<li class="breadcrumb-item"><a href="/case/server">所有设备</a></li>{% endblock %}
+{% block h4_title %}<li class="breadcrumb-item active">新建设备</li>{% endblock %}
 {% block case_show %}show{% endblock %}
 {% block font2_active %}active{% endblock %}
-{% block all_case_active %}class="active"{% endblock %}
+{% block all_server_active %}class="active"{% endblock %}
 
 {% block content %}
-<form class="row g-3" method="post" action=".">
+<form class="row g-3" method="post">
 {% csrf_token %}
     {% for field in form %}
     <div class="col-md-6">
@@ -22,7 +22,7 @@
 
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
            <i class="bi bi-exclamation-octagon me-1"></i>
-                {{ form.num.errors.as_text }}
+                {{ form.errors.as_text }}
            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
 

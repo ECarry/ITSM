@@ -15,5 +15,8 @@ urlpatterns = [
     path('project/<int:project_pk>', ProjectDetailView.as_view(), name="project_detail"),
     # 新建项目 http://127.0.0.1:8000/case/project/new_project
     path('project/new_project/', NewProjectView.as_view(), name="new_project"),
-
+    # 服务器列表 http://127.0.0.1:8000/case/server
+    path('server', ServerView.as_view(), name="server_list"),
+    # 新建服务器 http://127.0.0.1:8000/case/server/new_server
+    path('server/new_server', NewServerFormView.as_view(), name="new_server"),
 ]

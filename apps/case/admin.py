@@ -25,7 +25,7 @@ class DepartmentAdmin(admin.ModelAdmin):
 
 @admin.register(Server)
 class ServerAdmin(admin.ModelAdmin):
-    list_display = ('id', 'manufacturer', 'name', 'sn', 'project', 'support')
+    list_display = ('id', 'manufacturer', 'name', 'sn', 'project')
 
 
 @admin.register(Project)
