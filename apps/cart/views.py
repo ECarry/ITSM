@@ -1,5 +1,6 @@
 import random
 from django.shortcuts import render, get_object_or_404, HttpResponse, redirect
+from django.views.decorators.cache import cache_page
 from django.views.generic import View
 from .models import *
 from apps.user.mixin import LoginRequiredMixin

@@ -97,7 +97,7 @@ DATABASES = {
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'Location': '',
+        'LOCATION': '',
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
             'PASSWORD': '',
@@ -166,13 +166,13 @@ REDIS_PORT = ''
 REDIS_PASSWD = ''
 
 # session timeout
-SESSION_COOKIE_AGE = 60 * 20
+SESSION_COOKIE_AGE = 60 * 60
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 SESSION_SAVE_EVERY_REQUEST = True
 
 # session settings
-# SESSION_ENGINE = "django.contrib.sessions.backends.cache"
-# SESSION_CACHE_ALIAS = "default"
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
 
 # kuaidi100
 KUAIDI100_KEY = ''

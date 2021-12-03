@@ -116,4 +116,4 @@ class Server(models.Model):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return self.name
+        return "%s SN:%s" % (self.name, self.sn)
