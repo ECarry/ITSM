@@ -5,7 +5,7 @@ from .models import *
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('order_num', 'type', 'device',)
+    list_display = ('order_num', 'device',)
 
 
 @admin.register(TrackCompany)

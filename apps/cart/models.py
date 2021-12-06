@@ -10,8 +10,7 @@ class Order(BaseModel):
         (3, "已签收")
     }
     order_num = models.CharField(max_length=18, unique=True, verbose_name="订单编号")
-    type = models.ForeignKey('device.Device', on_delete=models.DO_NOTHING, null=True, verbose_name="备件类型")
-    device = models.ForeignKey('device.DeviceSKU', on_delete=models.DO_NOTHING, verbose_name="备件规格")
+    device = models.ForeignKey('device.DeviceSKU', on_delete=models.DO_NOTHING, verbose_name="备件")
     order_name = models.ForeignKey('user.User', on_delete=models.DO_NOTHING, verbose_name="采购人")
     project = models.ForeignKey('case.Project', on_delete=models.DO_NOTHING, verbose_name="相关项目")
     address = models.ForeignKey('Address', on_delete=models.DO_NOTHING, verbose_name="收货地址")

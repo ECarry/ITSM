@@ -178,6 +178,7 @@ SESSION_CACHE_ALIAS = "default"
 KUAIDI100_KEY = ''
 KUAIDI100_CUSTOMER = ''
 
+
 # import local_settings
 try:
     from .local_settings import *

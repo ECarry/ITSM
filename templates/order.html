@@ -50,7 +50,7 @@
       <tr>
         <td><a href="/order/detail/{{ order.pk }}"> {{ order.order_num }}</a></td>
         <td><a href="/case/detail/{{ order.case.pk }}"> {{ order.case.num|default_if_none:"-" }}</a></td>
-        <td>{{ order.device.name }}</td>
+        <td>{{ order.device.spu }}</td>
         <td>{{ order.device.spec }}</td>
         <td>{{ order.count }}</td>
         <td>{{ order.order_name }}</td>

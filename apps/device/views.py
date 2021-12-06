@@ -1,40 +1,49 @@
+from django.db.models import Q
 from django.shortcuts import render, HttpResponse, get_object_or_404
-from django.views.generic import View
+from django.views.generic import View, ListView, DetailView
 from apps.user.mixin import LoginRequiredMixin
 from .models import Device, DeviceSKU
 from django.core.paginator import Paginator
 
-# 获取所有设备信息
-# # http://127.0.0.1:8000/device
-class DeviceSKUView(LoginRequiredMixin, View):
-    def get(self, request):
-        # 获取所有备件信息
-        devices = DeviceSKU.objects.all()
 
-        # 分页显示
-        paginator = Paginator(devices, 10)  # 10个
-        page_num = request.GET.get('page', 1)
-        page_of_devices = paginator.get_page(page_num)
+# 备件型号列表
+class DeviceSKUListView(LoginRequiredMixin, ListView):
+    model = DeviceSKU
+    template_name = 'device_list.html'
+    context_object_name = 'devices'
+    search_value = ""
+    order_filed = "-id"
 
-        context = {
-            'devices': page_of_devices,
-        }
-        return render(request, 'device.html', context)
+    def get_queryset(self):
+        search = self.request.GET.get('search')
+        order_by = self.request.GET.get('orderby')
+        # 排序
+        if order_by:
+            all_devices = DeviceSKU.objects.all().order_by(order_by)
+            self.order_filed = order_by
+        else:
+            all_devices = DeviceSKU.objects.all().order_by(self.order_filed)
+        # 搜索
+        if search:
+            all_devices = DeviceSKU.objects.filter(Q(pn__icontains=search) | Q(spec__icontains=search))
+            self.search_value = search
+
+        self.count_total = all_devices.count()
+        paginator = Paginator(all_devices, 10)
+        page = self.request.GET.get('page', 1)
+        devices = paginator.get_page(page)
+        return devices
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(DeviceSKUListView, self).get_context_data(*args, **kwargs)
+        context['count_total'] = self.count_total
+        context['search'] = self.search_value
+        context['orderby'] = self.order_filed
+        context['objects'] = self.get_queryset()
+        return context
 
 
-# 获取单个设备详情
-# http://127.0.0.1:8000/device/device_id
-class DeviceDetail(LoginRequiredMixin, View):
-    def get(self, request, device_pk):
-        device = get_object_or_404(DeviceSKU, pk=device_pk)
-
-        # device detail
-        name = device.name
-        sn = device.sn
-        pn = device.pn
-
-        context = {
-            'name': name
-        }
-        return render(request, 'device.html', context)
+# 备件详情
+class DeviceDetailView(LoginRequiredMixin, DetailView):
+    pass
 

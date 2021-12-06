@@ -8,7 +8,7 @@ from django.db import models
 
 
 # 备件 SPU：代表一类
-class Device(models.Model):
+class DeviceSPU(models.Model):
     name = models.CharField(max_length=32, verbose_name="备件名称")
 
     class Meta:
@@ -21,41 +21,46 @@ class Device(models.Model):
 
 # 备件 SKU：代表具体型号
 class DeviceSKU(models.Model):
+    spu = models.ForeignKey('DeviceSPU', on_delete=models.DO_NOTHING, verbose_name="备件类型")
+    pn = models.CharField(max_length=32, verbose_name="PN")
+    spec = models.CharField(max_length=32, null=True, verbose_name="规格")
+    device_inventory = models.IntegerField(default=0, verbose_name="备件库存")
+    device_used = models.IntegerField(default=0, verbose_name="备件累计使用")
+    manufacturer = models.ForeignKey('Manufacturer', on_delete=models.DO_NOTHING, verbose_name="厂家")
+
+    class Meta:
+        # admin 页面显示名称
+        verbose_name = '备件SKU'
+        verbose_name_plural = verbose_name
+        ordering = ['-id']
+
+    def __str__(self):
+        return self.pn
+
+
+# 备件
+class Device(models.Model):
     STATUS_CHOICES = {
         (1, "入库"),
         (2, "使用"),
         (3, "损坏"),
         (4, "退货")
     }
-    name = models.ForeignKey('Device', on_delete=models.DO_NOTHING, verbose_name="备件名称")
+    sku = models.ForeignKey('DeviceSKU', on_delete=models.DO_NOTHING, verbose_name="备件型号")
     sn = models.CharField(max_length=32, null=True, blank=True, unique=True, verbose_name="序列号")
-    pn = models.CharField(max_length=32, verbose_name="型号")
-    spec = models.CharField(max_length=32, null=True, verbose_name="规格")
-    unit = models.SmallIntegerField(default=1, verbose_name="备件数")
-    device_inventory = models.IntegerField(default=0, verbose_name="备件库存")
-    device_used = models.IntegerField(default=0, verbose_name="备件累计使用")
+    status = models.SmallIntegerField(choices=STATUS_CHOICES, default=1, verbose_name="备件状态")
+    stock_in = models.ForeignKey('user.User', related_name="stock_in", on_delete=models.DO_NOTHING, verbose_name="入库人")
+    stock_out = models.ForeignKey('user.User', related_name="stock_out", null=True, blank=True,
+                                  on_delete=models.DO_NOTHING, verbose_name="出库人")
     # auto_now_add=True 时间不变
     # auto_now=True 跟随当前时间
     created_time = models.DateTimeField(auto_now_add=True, verbose_name="入库时间")
     last_time = models.DateTimeField(null=True, blank=True, verbose_name="出库时间")
     return_time = models.DateTimeField(null=True, blank=True, verbose_name="退货时间")
-    # on_delete=models.DO_NOTHING 删除备件不影响所关联的类型
-    # on_delete=models.CASCADE
-    status = models.SmallIntegerField(choices=STATUS_CHOICES, verbose_name="备件状态")
-    manufacturer = models.ForeignKey('Manufacturer', on_delete=models.DO_NOTHING, verbose_name="厂家")
-    stock_in = models.ForeignKey('user.User', related_name="stock_in", null=True, on_delete=models.DO_NOTHING,
-                                 verbose_name="入库人")
-    stock_out = models.ForeignKey('user.User', related_name="stock_out", null=True, blank=True,
-                                  on_delete=models.DO_NOTHING, verbose_name="出库人")
 
     class Meta:
-        # admin 页面显示名称
-        verbose_name = '备件'
+        verbose_name = "备件"
         verbose_name_plural = verbose_name
-        ordering = ['-id']
-
-    def __str__(self):
-        return self.pn
 
 
 # 制造商
