@@ -27,7 +27,7 @@ class OrderView(LoginRequiredMixin, View):
             'orders': page_of_orders
         }
 
-        return render(request, 'order.html', context)
+        return render(request, 'order/order.html', context)
 
 
 # 采购订单详情
@@ -74,7 +74,7 @@ class OrderDetailView(LoginRequiredMixin, View):
             'color': color
         }
 
-        return render(request, 'order_detail.html', context)
+        return render(request, 'order/order_detail.html', context)
 
     def post(self, request, order_pk):
         # 接收 form 表单数据
@@ -99,7 +99,7 @@ class NewOrderFormView(LoginRequiredMixin, View):
             'form': form
         }
 
-        return render(request, 'new_order_form.html', context)
+        return render(request, 'order/new_order_form.html', context)
 
     def post(self, request):
         # 订单号

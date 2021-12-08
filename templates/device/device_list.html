@@ -6,7 +6,7 @@
     <li class="breadcrumb-item active">所有备件</li>
 {% endblock %}
 {% block device_show %}show{% endblock %}
-{% block all_device_active %}class="active"{% endblock %}
+{% block all_devices_active %}class="active"{% endblock %}
 
 {% block content %}
 
@@ -14,12 +14,13 @@
 <div class="row">
     <div class="col-8">
                     <b>排序 : - </b>
-                    <a href="{% url 'device_list' %}?search={{ search }}&orderby=id">ID</a>  |
-                    <a href="">库存</a> |
+                    <a href="{% url 'device:device_list' %}?search={{ search }}&orderby=id">ID</a>  |
+                    <a href="{% url 'device:device_list' %}?search={{ search }}&orderby=-created_time">入库时间</a> |
+                    <a href="{% url 'device:device_list' %}?search={{ search }}&orderby=-last_time">出库时间</a> |
     </div>
     <div class="col-4">
         <form class="d-flex">
-            <input class="form-control" type="text" placeholder="请输入型号或规格进行查找" name="search" value={{ search }}>
+            <input class="form-control" type="text" placeholder="请输入SN或出库人进行查找" name="search" value={{ search }}>
             <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
         </form>
     </div>
@@ -32,28 +33,40 @@
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">类型</th>
-        <th scope="col">型号（P/N）</th>
-        <th scope="col">规格</th>
-        <th scope="col">厂家</th>
-        <th scope="col">库存</th>
-        <th scope="col">选项</th>
+        <th scope="col">型号</th>
+        <th scope="col">序列号</th>
+        <th scope="col">状态</th>
+        <th scope="col">入库人</th>
+        <th scope="col">入库时间</th>
+        <th scope="col">出库人</th>
+        <th scope="col">出库时间</th>
+        <th scope="col">相关工单</th>
       </tr>
     </thead>
     <tbody>
-      {% for device in devices %}
+      {% for d in devices %}
       <tr>
-        <td>{{ device.id }}</td>
-        <td>{{ device.spu }}</td>
-        <td>{{ device.pn }}</td>
-        <td>{{ device.spec }}</td>
-        <td>{{ device.manufacturer }}</td>
-        <td>{{ device.device_inventory }}</td>
-        <td>
-            <a href="#" class="badge rounded-pill bg-warning text-dark">查看</a>
-            <a href="#" class="badge rounded-pill bg-info text-dark">入库</a>
-            <a href="#" class="badge rounded-pill bg-danger">修改</a>
-        </td>
+        <td>{{ d.id }}</td>
+        <td>{{ d.sku }}</td>
+        <td>{{ d.sn|default_if_none:'-' }}</td>
+        {% if d.status == 1 %}
+        <td><span class="badge rounded-pill bg-primary">入库</span></td>
+        {% elif d.status == 2 %}
+        <td><span class="badge rounded-pill bg-success">使用</span></td>
+        {% elif d.status == 3 %}
+        <td><span class="badge rounded-pill bg-danger">损坏</span></td>
+        {% elif d.status == 4 %}
+        <td><span class="badge rounded-pill bg-secondary">退货</span></td>
+        {% endif %}
+        <td>{{ d.stock_in }}</td>
+        <td>{{ d.created_time }}</td>
+        <td>{{ d.stock_out|default_if_none:'-' }}</td>
+        <td>{{ d.last_time|default_if_none:'-' }}</td>
+        {% if d.case == None %}
+        <td>-</td>
+        {% else %}
+        <td><a href="/case/detail/{{ d.case.id }}">{{ d.case }}</a></td>
+        {% endif %}
       </tr>
     {% endfor %}
     </tbody>

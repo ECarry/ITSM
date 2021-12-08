@@ -50,6 +50,10 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # 全局缓存
+    # 'django.middleware.cache.UpdateCacheMiddleware',
+    # 'django.middleware.common.CommonMiddleware',
+    # 'django.middleware.cache.FetchFromCacheMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -166,7 +170,7 @@ REDIS_PORT = ''
 REDIS_PASSWD = ''
 
 # session timeout
-SESSION_COOKIE_AGE = 60 * 60
+SESSION_COOKIE_AGE = 60 * 60 * 24
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 SESSION_SAVE_EVERY_REQUEST = True
 

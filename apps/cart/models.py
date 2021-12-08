@@ -15,7 +15,7 @@ class Order(BaseModel):
     project = models.ForeignKey('case.Project', on_delete=models.DO_NOTHING, verbose_name="相关项目")
     address = models.ForeignKey('Address', on_delete=models.DO_NOTHING, verbose_name="收货地址")
     case = models.ForeignKey('case.Case', on_delete=models.DO_NOTHING, null=True, blank=True, verbose_name="相关工单")
-    count = models.SmallIntegerField(default=1, verbose_name="采购数量")
+    count = models.PositiveIntegerField(default=1, verbose_name="采购数量")
     track_num = models.CharField(max_length=32, null=True, blank=True, verbose_name="物流单号")
     track = models.ForeignKey('TrackCompany', on_delete=models.DO_NOTHING, null=True, blank=True, verbose_name="物流公司")
     track_status = models.SmallIntegerField(choices=TRACK_STATUS_CHOICES, default=1, verbose_name="物流状态")

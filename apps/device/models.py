@@ -23,9 +23,9 @@ class DeviceSPU(models.Model):
 class DeviceSKU(models.Model):
     spu = models.ForeignKey('DeviceSPU', on_delete=models.DO_NOTHING, verbose_name="备件类型")
     pn = models.CharField(max_length=32, verbose_name="PN")
-    spec = models.CharField(max_length=32, null=True, verbose_name="规格")
-    device_inventory = models.IntegerField(default=0, verbose_name="备件库存")
-    device_used = models.IntegerField(default=0, verbose_name="备件累计使用")
+    spec = models.CharField(max_length=32, default='-', verbose_name="规格")
+    device_inventory = models.PositiveIntegerField(default=0, verbose_name="备件库存")
+    device_used = models.PositiveIntegerField(default=0, verbose_name="备件累计使用")
     manufacturer = models.ForeignKey('Manufacturer', on_delete=models.DO_NOTHING, verbose_name="厂家")
 
     class Meta:
@@ -35,7 +35,7 @@ class DeviceSKU(models.Model):
         ordering = ['-id']
 
     def __str__(self):
-        return self.pn
+        return self.spu.name + self.pn + ' ' + self.spec
 
 
 # 备件
@@ -57,6 +57,7 @@ class Device(models.Model):
     created_time = models.DateTimeField(auto_now_add=True, verbose_name="入库时间")
     last_time = models.DateTimeField(null=True, blank=True, verbose_name="出库时间")
     return_time = models.DateTimeField(null=True, blank=True, verbose_name="退货时间")
+    case = models.OneToOneField('case.Case', on_delete=models.DO_NOTHING, null=True, blank=True, verbose_name="相关工单")
 
     class Meta:
         verbose_name = "备件"

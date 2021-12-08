@@ -309,12 +309,12 @@
         <ul id="tables-nav" class="nav-content collapse {% block device_show %}{% endblock %}" data-bs-parent="#sidebar-nav">
 
           <li>
-            <a href="/device" {% block all_device_active %}{% endblock %}>
-              <i class="bi bi-circle"></i><span>所有备件型号</span>
+            <a href="{% url 'device:sku_list' %}" {% block all_device_active %}{% endblock %}>
+              <i class="bi bi-circle"></i><span>备件型号</span>
             </a>
           </li>
           <li>
-            <a href="tables-data.html">
+            <a href="{% url 'device:device_list' %}" {% block all_devices_active %}{% endblock %}>
               <i class="bi bi-circle"></i><span>所有备件</span>
             </a>
           </li>

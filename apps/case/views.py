@@ -15,7 +15,7 @@ class NewCaseFormView(LoginRequiredMixin, View):
             'form': form
         }
 
-        return render(request, 'new_case_form.html', context)
+        return render(request, 'case/new_case_form.html', context)
 
     def post(self, request):
         # 当前登录用户
@@ -34,7 +34,7 @@ class NewCaseFormView(LoginRequiredMixin, View):
                 'show': 'show'
             }
             print(form.errors)
-            return render(request, 'new_case_form.html', context=context)
+            return render(request, 'case/new_case_form.html', context=context)
 
 
 # 工单列表视图
@@ -53,7 +53,7 @@ class CaseView(LoginRequiredMixin, View):
             'cases': page_of_cases,
                    }
 
-        return render(request, 'case.html', context)
+        return render(request, 'case/case.html', context)
 
 
 # 工单详情视图
@@ -65,7 +65,7 @@ class CaseDetailView(LoginRequiredMixin, View):
             'case': case
         }
 
-        return render(request, 'case_detail.html', context)
+        return render(request, 'case/case_detail.html', context)
 
 
 # 新建项目
@@ -79,7 +79,7 @@ class NewProjectView(LoginRequiredMixin, View):
             'company': company
         }
 
-        return render(request, 'new_project.html', context)
+        return render(request, 'case/new_project.html', context)
 
     # post 新建项目
     def post(self, request):
@@ -93,7 +93,7 @@ class NewProjectView(LoginRequiredMixin, View):
             p = None
 
         if p:
-            return render(request, 'new_project.html', {'errmsg': "项目编号" + " " + project_num + " " +
+            return render(request, 'case/new_project.html', {'errmsg': "项目编号" + " " + project_num + " " +
                                                         "已存在", 'error_show': "show"})
 
         # 获取并处理 POST 数据
@@ -140,7 +140,7 @@ class ProjectView(LoginRequiredMixin, View):
         context = {
             'projects': page_of_projects
         }
-        return render(request, 'project.html', context)
+        return render(request, 'case/project.html', context)
 
 
 # 项目详细视图
@@ -158,7 +158,7 @@ class ProjectDetailView(LoginRequiredMixin, View):
             'companys': companys
         }
 
-        return render(request, 'project_detail.html', context)
+        return render(request, 'case/project_detail.html', context)
 
     # post 更新项目
     def post(self, request, project_pk):
@@ -183,7 +183,7 @@ class ServerView(LoginRequiredMixin, View):
             'servers': servers
         }
 
-        return render(request, 'server.html', context)
+        return render(request, 'case/server.html', context)
 
 
 # 新建服务器视图
@@ -195,7 +195,7 @@ class NewServerFormView(LoginRequiredMixin, View):
             'form': form,
         }
 
-        return render(request, 'new_server_form.html', context)
+        return render(request, 'case/new_server_form.html', context)
 
     def post(self, request):
         form = ServerForm(request.POST)
@@ -211,4 +211,4 @@ class NewServerFormView(LoginRequiredMixin, View):
                 'show': 'show'
             }
 
-            return render(request, 'new_server_form.html', context)
+            return render(request, 'case/new_server_form.html', context)

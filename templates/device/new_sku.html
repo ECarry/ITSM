@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}新建型号{% endblock %}
+{% block h1_title %}新建型号{% endblock %}
+{% block h2_title %}备件管理{% endblock %}
+{% block h3_title %}<li class="breadcrumb-item"><a href="{% url 'device:sku_list' %}">备件型号</a></li>{% endblock %}
+{% block h4_title %}<li class="breadcrumb-item active">新建型号</li>{% endblock %}
+{% block device_show %}show{% endblock %}
+{% block font2_active %}active{% endblock %}
+{% block all_device_active %}class="active"{% endblock %}
+
+{% block content %}
+
+<form class="row g-3" method="post">
+{% csrf_token %}
+    {% for field in form %}
+    <div class="col-md-6">
+      <label class="form-label">{{ field.label }}：</label>
+        {{ field }}
+    </div>
+    {% endfor %}
+
+    {% if form.errors %}
+
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+           <i class="bi bi-exclamation-octagon me-1"></i>
+                {{ form.num.errors.as_text }}
+           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+    {% endif %}
+
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary">新建</button>
+    </div>
+</form>
+
+{% endblock %}

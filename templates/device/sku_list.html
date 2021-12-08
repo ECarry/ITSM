@@ -1,0 +1,98 @@
+{% extends 'base_list.html' %}
+{% block title %}备件类型{% endblock %}
+{% block h1_title %}备件类型{% endblock %}
+{% block h2_title %}备件管理{% endblock %}
+{% block h3_title %}
+    <li class="breadcrumb-item active">备件类型</li>
+{% endblock %}
+{% block device_show %}show{% endblock %}
+{% block all_device_active %}class="active"{% endblock %}
+
+{% block content %}
+
+  <!-- ======= 头部按钮 ======= -->
+<div class="row">
+    <div class="col-9">
+                    <b>排序 : - </b>
+                    <a href="{% url 'device:sku_list' %}?search={{ search }}&orderby=id">ID</a>  |
+                    <a href="{% url 'device:sku_list' %}?search={{ search }}&orderby=-device_inventory">库存</a> |
+                    <a href="{% url 'device:sku_list' %}?search={{ search }}&orderby=-device_used">使用量</a> |
+    </div>
+    <div class="col-3">
+        <form class="d-flex">
+            <input class="form-control" type="text" placeholder="请输入型号或规格进行查找" name="search" value={{ search }}>
+            <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
+        </form>
+    </div>
+
+    <div class="col-1">
+        <a href="{% url 'device:new_sku' %}"><button type="button" class="btn btn-primary btn-sm"><i class="bi bi-collection"></i> 新建</button></a>
+    </div>
+
+  <!-- ======= 表格 ======= -->
+<div class="table-responsive ">
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">类型</th>
+        <th scope="col">型号（P/N）</th>
+        <th scope="col">规格</th>
+        <th scope="col">厂家</th>
+        <th scope="col">库存</th>
+        <th scope="col">使用量</th>
+        <th scope="col">选项</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for sku in skus %}
+      <tr>
+        <td>{{ sku.id }}</td>
+        <td>{{ sku.spu }}</td>
+        <td>{{ sku.pn }}</td>
+        <td>{{ sku.spec }}</td>
+        <td>{{ sku.manufacturer }}</td>
+          {% if sku.device_inventory < 3 %}
+        <td><span class="badge border-danger border-1 text-danger">{{ sku.device_inventory }}</span></td>
+          {% else %}
+        <td><span class="badge border-success border-1 text-success">{{ sku.device_inventory }}</span></td>
+          {% endif %}
+        <td><span class="badge border-success border-1 text-dark">{{ sku.device_used }}</span></td>
+        <td>
+            <a href="{% url 'device:sku_detail' sku.id%}" class="badge rounded-pill bg-warning text-dark"><i class="ri ri-eye-2-line"></i> 查看</a>
+            <a href="{% url 'device:new_device' sku.id%}" class="badge rounded-pill bg-info text-dark"><i class="ri ri-add-line"></i> 入库</a>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+  <!-- ======= 页码 ======= -->
+<ul class="pagination justify-content-center">
+
+{#    上一页#}
+    {% if skus.has_previous %}
+  <li class="page-item"><a class="page-link" href="?page={{ skus.previous_page_number }}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+    {% else %}
+  <li class="page-item disabled"><a class="page-link" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+    {% endif %}
+
+{#    全部页码#}
+    {% for page_num in skus.paginator.page_range %}
+        {% if skus.number == page_num %}
+  <li class="page-item active"><a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a></li>
+        {% else %}
+  <li class="page-item"><a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a></li>
+        {% endif %}
+    {% endfor %}
+
+{#    下一页#}
+    {% if skus.has_next %}
+  <li class="page-item"><a class="page-link" href="?page={{ skus.next_page_number }}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+    {% else %}
+  <li class="page-item disabled"><a class="page-link" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+    {% endif %}
+
+</ul>
+
+{% endblock %}

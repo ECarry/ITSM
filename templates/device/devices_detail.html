@@ -1,0 +1,72 @@
+{% extends 'base_edit.html' %}
+{% block title %}备件类型详情-{{ sku.pn }}{% endblock %}
+{% block h1_title %}{{ sku.pn }}{% endblock %}
+{% block h2_title %}备件管理{% endblock %}
+{% block h3_title %}
+    <li class="breadcrumb-item active"><a href="{% url 'device:sku_list' %}">备件类型</a></li>
+{% endblock %}
+{% block h4_title %}<li class="breadcrumb-item active">{{ sku.pn }}</li>{% endblock %}
+{% block device_show %}show{% endblock %}
+{% block font2_active %}active{% endblock %}
+{% block all_device_active %}class="active"{% endblock %}
+{% block edit_title %}编辑{% endblock %}
+
+{% block detail_title %}备件详情{% endblock %}
+{% block value %}
+
+<div class="row">
+    <div class="col-lg-1 col-md-1 label ">类型</div>
+    <div class="col-lg-3 col-md-3">{{ sku.spu }}</div>
+    <div class="col-lg-1 col-md-1 label ">PN</div>
+    <div class="col-lg-3 col-md-3">{{ sku.pn }}</div>
+    <div class="col-lg-1 col-md-1 label ">规格</div>
+    <div class="col-lg-3 col-md-3">{{ sku.spec }}</div>
+</div>
+
+<div class="row">
+    <div class="col-lg-1 col-md-1 label ">库存</div>
+    <div class="col-lg-3 col-md-3">{{ sku.device_inventory }}</div>
+    <div class="col-lg-1 col-md-1 label ">使用量</div>
+    <div class="col-lg-3 col-md-3">{{ sku.device_used }}</div>
+    <div class="col-lg-1 col-md-1 label ">厂家</div>
+    <div class="col-lg-3 col-md-3">{{ sku.manufacturer }}</div>
+</div>
+
+{% endblock %}
+
+{% block table %}
+
+<h5 class="card-title">备件列表</h5>
+<div class="table-responsive ">
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">序列号（S/N）</th>
+        <th scope="col">状态</th>
+        <th scope="col">入库人</th>
+        <th scope="col">入库时间</th>
+        <th scope="col">出库人</th>
+        <th scope="col">出库时间</th>
+        <th scope="col">退货时间</th>
+        <th scope="col">相关工单</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for device in devices %}
+      <tr>
+        <td>{{ device.id }}</td>
+        <td>{{ device.sn|default_if_none:"-" }}</td>
+        <td>{{ device.get_status_display }}</td>
+        <td>{{ device.stock_in }}</td>
+        <td>{{ device.created_time }}</td>
+        <td>{{ device.stock_out|default_if_none:"无" }}</td>
+        <td>{{ device.last_time|default_if_none:"无" }}</td>
+        <td>{{ device.return_time|default_if_none:"无" }}</td>
+        <td><a href="/case/detail/{{ device.case.id }}">{{ device.case|default_if_none:"" }}</a></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}

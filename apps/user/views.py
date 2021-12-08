@@ -18,7 +18,7 @@ class LoginView(View):
             checked = ''
 
         # 显示登录页面
-        return render(request, 'pages-login.html', {'username': username, 'checked': checked})
+        return render(request, 'user/pages-login.html', {'username': username, 'checked': checked})
 
     def post(self, request):
         # 进行登录处理
@@ -29,7 +29,7 @@ class LoginView(View):
 
         # 校验数据
         if not all([username, passwd]):
-            return render(request, 'pages-login.html', {'errmsg': '请输入用户名和密码', 'show_code': 'show'})
+            return render(request, 'user/pages-login.html', {'errmsg': '请输入用户名和密码', 'show_code': 'show'})
 
         # 登录校验
         user = authenticate(request, username=username, password=passwd)
@@ -49,11 +49,11 @@ class LoginView(View):
                     response.delete_cookie('username')
                 return response
             else:
-                return render(request, 'pages-login.html', {'errmsg': '用户未激活', 'show_code': 'show'})
+                return render(request, 'user/pages-login.html', {'errmsg': '用户未激活', 'show_code': 'show'})
         # 返回应答
         else:
             # 验证失败，
-            return render(request, 'pages-login.html', {'errmsg': '用户名密码错误或用户不存在', 'show_code': 'show'})
+            return render(request, 'user/pages-login.html', {'errmsg': '用户名密码错误或用户不存在', 'show_code': 'show'})
 
 
 # logout view http://127.0.0.1:8000/user/logout
@@ -67,7 +67,7 @@ class LogoutView(LoginRequiredMixin, View):
 # user profile view
 class UserProfileView(LoginRequiredMixin, View):
     def get(self, request):
-        return render(request, 'users-profile.html', )
+        return render(request, 'user/users-profile.html', )
 
     def post(self, request):
         pass
@@ -76,7 +76,7 @@ class UserProfileView(LoginRequiredMixin, View):
 # register view http://127.0.0.1:8000/user/register
 class RegisterView(LoginRequiredMixin, View):
     def get(self, request):
-        return render(request, 'register.html')
+        return render(request, 'user/register.html')
 
     def post(self, request):
         # 接收数据并校验数据
@@ -92,11 +92,11 @@ class RegisterView(LoginRequiredMixin, View):
 
         if not all([username, passwd1, passwd2, email, mobile, name]):
             # 数据不完整
-            return render(request, 'register.html', {'errmsg': "数据不完整", 'error_show': 'show'})
+            return render(request, 'user/register.html', {'errmsg': "数据不完整", 'error_show': 'show'})
 
         # 判断两侧密码是否一样
         if not passwd1 == passwd2:
-            return render(request, 'register.html', {'errmsg': "两次密码不一致", 'error_show': 'show'})
+            return render(request, 'user/register.html', {'errmsg': "两次密码不一致", 'error_show': 'show'})
 
         # 校验 username 是否重复
         try:
@@ -107,7 +107,7 @@ class RegisterView(LoginRequiredMixin, View):
 
         if user:
             # 用户名存在
-            return render(request, 'register.html', {'errmsg': "用户名存在", 'error_show': 'show'})
+            return render(request, 'user/register.html', {'errmsg': "用户名存在", 'error_show': 'show'})
 
         # 用户注册
         user = User.objects.create_user(username=username, email=email)
@@ -128,4 +128,4 @@ class RegisterView(LoginRequiredMixin, View):
         user.name = name
         user.save()
 
-        return render(request, 'register.html', {'msg': "账号创建成功", 'success_show': 'show'})
+        return render(request, 'user/register.html', {'msg': "账号创建成功", 'success_show': 'show'})
