@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'case',
     'db',   # 注册自建的通用Model类
     'utils',    # tools
+    'rest_framework',
+    'Api',
 ]
 
 MIDDLEWARE = [

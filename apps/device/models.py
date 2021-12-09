@@ -9,7 +9,7 @@ from django.db import models
 
 # 备件 SPU：代表一类
 class DeviceSPU(models.Model):
-    name = models.CharField(max_length=32, verbose_name="备件名称")
+    name = models.CharField(max_length=32, unique=True, verbose_name="备件类型")
 
     class Meta:
         verbose_name = "备件SPU"
@@ -21,7 +21,7 @@ class DeviceSPU(models.Model):
 
 # 备件 SKU：代表具体型号
 class DeviceSKU(models.Model):
-    spu = models.ForeignKey('DeviceSPU', on_delete=models.DO_NOTHING, verbose_name="备件类型")
+    spu = models.ForeignKey('DeviceSPU', on_delete=models.DO_NOTHING, verbose_name="备件型号")
     pn = models.CharField(max_length=32, verbose_name="PN")
     spec = models.CharField(max_length=32, default='-', verbose_name="规格")
     device_inventory = models.PositiveIntegerField(default=0, verbose_name="备件库存")
