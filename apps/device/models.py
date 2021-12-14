@@ -21,8 +21,8 @@ class DeviceSPU(models.Model):
 
 # 备件 SKU：代表具体型号
 class DeviceSKU(models.Model):
-    spu = models.ForeignKey('DeviceSPU', on_delete=models.DO_NOTHING, verbose_name="备件型号")
-    pn = models.CharField(max_length=32, verbose_name="PN")
+    spu = models.ForeignKey('DeviceSPU', on_delete=models.DO_NOTHING, verbose_name="备件类型")
+    pn = models.CharField(max_length=32, unique=True, verbose_name="PN")
     spec = models.CharField(max_length=32, default='-', verbose_name="规格")
     device_inventory = models.PositiveIntegerField(default=0, verbose_name="备件库存")
     device_used = models.PositiveIntegerField(default=0, verbose_name="备件累计使用")
@@ -66,7 +66,7 @@ class Device(models.Model):
 
 # 制造商
 class Manufacturer(models.Model):
-    manufacturer_name = models.CharField(max_length=32, verbose_name="厂家")
+    manufacturer_name = models.CharField(max_length=32, unique=True, verbose_name="厂家")
 
     def __str__(self):
         return self.manufacturer_name

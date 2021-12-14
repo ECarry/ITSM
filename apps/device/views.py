@@ -1,10 +1,14 @@
+import json
+
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View, ListView, DetailView
 from apps.user.mixin import LoginRequiredMixin
-from .models import Device, DeviceSKU
+from .models import Device, DeviceSKU, DeviceSPU, Manufacturer
 from django.core.paginator import Paginator
-from .forms import SKUForm
+from .forms import SKUForm, SPUForm, ManufacturerForm
 
 
 # 备件列表
@@ -142,3 +146,59 @@ class NewDeviceSKUView(LoginRequiredMixin, View):
         else:
             print(form.errors)
         return redirect('device:sku_list')
+
+
+# 新建SPU
+@login_required
+def add_spu_popup(request):
+    form = SPUForm(request.POST)
+    if request.method == 'GET':
+        return render(request, 'device/add_spu.html', {'form': form})
+
+    if request.method == 'POST':
+        if form.is_valid():
+            instance = form.save()
+            return HttpResponse(
+                '<script>opener.closePopup(window, "%s", "%s", "#id_spu");</script>' % (instance.pk, instance)
+            )
+        else:
+            print(form.errors)
+            return render(request, 'device/add_spu.html', {'form': form})
+
+
+@csrf_exempt
+def get_spu_id(request):
+    if request.is_ajax():
+        spu_name = request.GET['spu_name']
+        spu_id = DeviceSPU.objects.get(name=spu_name).id
+        data = {'spu_id': spu_id, }
+        return HttpResponse(json.dumps(data), content_type='application/json')
+    return HttpResponse("/")
+
+
+# 新建厂家
+@login_required
+def add_manufacturer_popup(request):
+    form = ManufacturerForm(request.POST)
+    if request.method == 'GET':
+        return render(request, 'device/add_manufacturer.html', {'form': form})
+
+    if request.method == 'POST':
+        if form.is_valid():
+            instance = form.save()
+            return HttpResponse(
+                '<script>opener.closePopup(window, "%s", "%s", "#id_manufacturer");</script>' % (instance.pk, instance)
+            )
+        else:
+            print(form.errors)
+            return render(request, 'device/add_manufacturer.html', {'form': form})
+
+
+@csrf_exempt
+def get_manufacturer_id(request):
+    if request.is_ajax():
+        manufacturer_name = request.GET['manufacturer_name']
+        manufacturer_id = Manufacturer.objects.get(name=manufacturer_name).id
+        data = {'manufacturer_id': manufacturer_id, }
+        return HttpResponse(json.dumps(data), content_type='application/json')
+    return HttpResponse("/")

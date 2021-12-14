@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+
 {% block title %}新建型号{% endblock %}
 {% block h1_title %}新建型号{% endblock %}
 {% block h2_title %}备件管理{% endblock %}
@@ -12,12 +13,21 @@
 
 <form class="row g-3" method="post">
 {% csrf_token %}
-    {% for field in form %}
-    <div class="col-md-6">
-      <label class="form-label">{{ field.label }}：</label>
-        {{ field }}
+    <div class="col-md-6"><label class="form-label">{{ form.spu.label }}：</label>
+        {{ form.spu }}
+        <a href="{% url 'device:add_spu' %}" id="add_spu" onclick="return showAddPopup(this);"><i class="ri-add-box-line"></i></a>
     </div>
-    {% endfor %}
+
+    <div class="col-md-6"><label class="form-label">{{ form.pn.label }}：{{ form.pn }}</label>
+    </div>
+
+    <div class="col-md-6"><label class="form-label">{{ form.spec.label }}：{{ form.spec }}</label>
+    </div>
+
+    <div class="col-md-6"><label class="form-label">{{ form.manufacturer.label }}：</label>
+        {{ form.manufacturer }}
+        <a href="{% url 'device:add_manufacturer' %}" id="add_manufacturer" onclick="return showAddPopup(this);"><i class="ri-add-box-line"></i></a>
+    </div>
 
     {% if form.errors %}
 

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class = "container">
+	<h1>新建厂家</h1>
+	<form method='post' enctype="multipart/form-data" novalidate id=manufacturer-form">
+        {% csrf_token %}
+		{{form.as_p}}
+		<input type="submit" value = "新建">
+	</form>
+</div>
+
+{% endblock %}

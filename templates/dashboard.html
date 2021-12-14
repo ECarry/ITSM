@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">工单数 <span>| 本周</span></h5>
+                  <h5 class="card-title">工单数 <span>| 本月</span></h5>
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -62,7 +62,7 @@
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">备件使用 <span>| 本周</span></h5>
+                  <h5 class="card-title">备件使用 <span>| 本月</span></h5>
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -96,7 +96,7 @@
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">采购订单 <span>| 本周</span></h5>
+                  <h5 class="card-title">采购订单 <span>| 本月</span></h5>
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -128,68 +128,67 @@
                     <li><a class="dropdown-item" href="#">今年</a></li>
                   </ul>
                 </div>
+            <div class="card-body">
+              <h5 class="card-title">工单数 <span>| 本月</span></h5>
 
-                <div class="card-body">
-                  <h5 class="card-title">工单 <span>/本周</span></h5>
+              <!-- Line Chart -->
+              <div id="lineChart" style="min-height: 400px;" class="echart"></div>
 
-                  <!-- Line Chart -->
-                  <div id="reportsChart"></div>
+              <script>
 
-                  <script>
-                    document.addEventListener("DOMContentLoaded", () => {
-                      new ApexCharts(document.querySelector("#reportsChart"), {
-                        series: [{
-                          name: '订单总数',
-                          data: [31, 40, 28, 51, 42, 82, 56],
-                        }, {
-                          name: '已处理',
-                          data: [11, 32, 45, 32, 34, 52, 41]
-                        }, {
-                          name: '未完成',
-                          data: [15, 11, 32, 18, 9, 24, 11]
-                        }],
-                        chart: {
-                          height: 350,
-                          type: 'area',
-                          toolbar: {
-                            show: false
-                          },
-                        },
-                        markers: {
-                          size: 4
-                        },
-                        colors: ['#4154f1', '#2eca6a', '#ff771d'],
-                        fill: {
-                          type: "gradient",
-                          gradient: {
-                            shadeIntensity: 1,
-                            opacityFrom: 0.3,
-                            opacityTo: 0.4,
-                            stops: [0, 90, 100]
-                          }
-                        },
-                        dataLabels: {
-                          enabled: false
-                        },
-                        stroke: {
-                          curve: 'smooth',
-                          width: 2
-                        },
-                        xaxis: {
-                          type: 'datetime',
-                          categories: ["2018-09-19", "2018-09-20", "2018-09-21", "2018-09-22", "2018-09-23", "2018-09-24", "2018-09-25"]
-                        },
-                        tooltip: {
-                          x: {
-                            format: 'yy/MM/dd'
-                          },
+                document.addEventListener("DOMContentLoaded", () => {
+                  echarts.init(document.querySelector("#lineChart")).setOption({
+                    tooltip: {
+                        trigger: 'axis'
+                      },
+                    legend: {
+                        data: ['工单数', '已处理', '处理中']
+                      },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                      },
+                     toolbox: {
+                        feature: {
+
                         }
-                      }).render();
-                    });
-                  </script>
-                  <!-- End Line Chart -->
+                      },
+                     xAxis: {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31']
+                      },
+                     yAxis: {
+                        type: 'value'
+                      },
+                     series: [
+                        {
+                          name: '工单数',
+                          type: 'line',
 
-                </div>
+                          data: {{ all_data }}
+                        },
+                        {
+                          name: '已处理',
+                          type: 'line',
+
+                          data: {{ solved_data }}
+                        },
+                        {
+                          name: '处理中',
+                          type: 'line',
+
+                          data: {{ processing_data }}
+                        },
+                      ]
+                  });
+                });
+              </script>
+              <!-- End Line Chart -->
+
+            </div>
 
               </div>
             </div><!-- End Reports -->
